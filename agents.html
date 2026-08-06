@@ -26,7 +26,7 @@
   <main class="section">
     <div class="container">
       <h1>🤖 هوش مصنوعی آریاز</h1>
-      <p class="muted mb-8">یک Agent انتخاب کنید، پیام بنویسید و پاسخ بگیرید.</p>
+      <p class="muted mb-8">یک Agent انتخاب کنید، پیام بنویسید و پاسخ بگیرید. تاریخچه در همین مرورگر ذخیره می‌شود.</p>
       <div class="grid-2" style="margin-bottom:24px">
         <button type="button" class="card feature-card" onclick="selectAgent('کوچ رهبری')"><div class="icon icon-blue">🤖</div><h3>کوچ رهبری</h3><p>سبک رهبری و تصمیم تیمی</p></button>
         <button type="button" class="card feature-card" onclick="selectAgent('مربی توسعه فردی')"><div class="icon icon-violet">🤖</div><h3>مربی توسعه فردی</h3><p>هدف‌گذاری و عادت</p></button>
@@ -37,7 +37,7 @@
         <p id="agentName" style="font-weight:600">یک Agent انتخاب کنید</p>
         <div id="chatLog" style="min-height:180px;max-height:320px;overflow-y:auto;margin:12px 0;padding:12px;background:#f8fafc;border-radius:12px"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <input id="chatInput" placeholder="پیام شما..." style="flex:1;min-width:200px;padding:12px;border-radius:10px;border:1px solid #e2e8f0;font-family:inherit" />
+          <input id="chatInput" placeholder="مثلاً: چطور به همکارم بازخورد منفی بدهم؟" style="flex:1;min-width:200px;padding:12px;border-radius:10px;border:1px solid #e2e8f0;font-family:inherit" />
           <button type="button" class="btn btn-primary" onclick="sendChat()">ارسال</button>
         </div>
       </div>

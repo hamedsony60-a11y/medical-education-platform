@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دوره‌های آموزشی | آریاز</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <nav class="nav" id="nav">
+        <a href="courses.html" class="active">دوره‌ها</a>
+        <a href="paths.html">مسیر یادگیری</a>
+        <a href="assessments.html">ارزیابی</a>
+        <a href="library.html">کتابخانه</a>
+        <a href="store.html">فروشگاه</a>
+        <a href="agents.html">Agent هوشمند</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <div class="page-header">
+        <div>
+          <h1>LMS — دوره‌های آموزشی</h1>
+          <p class="muted">فصل، درس، ویدیو، پیشرفت، آزمون و گواهینامه</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="search-box"><input type="search" id="q" placeholder="جستجوی دوره..." oninput="filterCourses()" /></div>
+        <select class="filter-select" id="cat" onchange="filterCourses()">
+          <option value="">همه دسته‌ها</option>
+          <option value="مهارت نرم">مهارت نرم</option>
+          <option value="رهبری">رهبری</option>
+          <option value="منابع انسانی">منابع انسانی</option>
+          <option value="توسعه فردی">توسعه فردی</option>
+        </select>
+      </div>
+      <div class="grid-3" id="courseGrid"></div>
+      <div id="courseModal" class="modal hidden">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeCourse()">×</button>
+          <h2 id="cTitle"></h2>
+          <p class="muted" id="cMeta"></p>
+          <div id="cChapters" style="margin:16px 0"></div>
+          <div class="progress-bar" style="margin:12px 0"><span id="cProgress" style="width:0%"></span></div>
+          <p class="muted" id="cPct">۰٪ پیشرفت</p>
+          <button class="btn btn-primary btn-block" id="cEnrollBtn" onclick="enrollCourse()">ثبت‌نام در دوره</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/courses.js"></script>
+</body>
+</html>

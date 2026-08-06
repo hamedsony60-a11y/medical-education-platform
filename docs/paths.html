@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مسیرهای یادگیری | آریاز</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <nav class="nav" id="nav">
+        <a href="courses.html">دوره‌ها</a>
+        <a href="paths.html" class="active">مسیر یادگیری</a>
+        <a href="assessments.html">ارزیابی</a>
+        <a href="library.html">کتابخانه</a>
+        <a href="store.html">فروشگاه</a>
+        <a href="agents.html">Agent هوشمند</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <h1>Learning Path Builder</h1>
+      <p class="muted mb-8">مسیرهای توسعه فردی و سازمانی با پیش‌نیاز و پیشرفت</p>
+      <div class="list" id="pathList"></div>
+      <div id="pathModal" class="modal hidden">
+        <div class="modal-content">
+          <button class="modal-close" onclick="document.getElementById('pathModal').classList.add('hidden')">×</button>
+          <h2 id="pTitle"></h2>
+          <p class="muted" id="pGoal"></p>
+          <ol id="pSteps" style="padding-right:20px;margin:16px 0"></ol>
+          <div class="progress-bar"><span id="pBar" style="width:0%"></span></div>
+          <p class="muted" id="pPct" style="margin:8px 0 16px">۰٪</p>
+          <button class="btn btn-primary btn-block" id="pBtn" onclick="startPath()">شروع / ادامه مسیر</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/paths.js"></script>
+</body>
+</html>

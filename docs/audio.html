@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>فایل‌های صوتی | مد‌ادو</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">مد‌ادو</a>
+      <nav class="nav" id="nav">
+        <a href="exams.html">آزمون‌ها</a>
+        <a href="videos.html">ویدیوها</a>
+        <a href="audio.html" class="active">صوت</a>
+        <a href="store.html">فروشگاه</a>
+        <a href="seminars.html">سمینارها</a>
+        <a href="dashboard.html" class="nav-dashboard">داشبورد</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <div class="page-header">
+        <div>
+          <h1>فایل‌های صوتی آموزشی</h1>
+          <p class="muted">پادکست و فایل صوتی تخصصی</p>
+        </div>
+        <button class="btn btn-primary" onclick="document.getElementById('uploadAudio').click()">آپلود فایل صوتی</button>
+        <input type="file" id="uploadAudio" accept="audio/*" hidden onchange="handleAudioUpload(this)" />
+      </div>
+      <div class="list" id="audioList">
+        <div class="card list-item audio-item">
+          <div class="audio-icon">🎧</div>
+          <div class="flex-1"><span class="badge">ایمونولوژی</span><h2>مروری بر سیستم ایمنی</h2><p class="muted">دکتر نوری · ۲۸:۴۰</p></div>
+          <button class="btn btn-secondary" onclick="playAudioDemo(this)">پخش</button>
+        </div>
+        <div class="card list-item audio-item">
+          <div class="audio-icon">🎧</div>
+          <div class="flex-1"><span class="badge">فارماکولوژی</span><h2>اصول تجویز آنتی‌بیوتیک</h2><p class="muted">دکتر حسینی · ۴۵:۱۲</p></div>
+          <button class="btn btn-secondary" onclick="playAudioDemo(this)">پخش</button>
+        </div>
+      </div>
+      <audio id="audioPlayer" controls class="audio-player hidden"></audio>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/audio.js"></script>
+</body>
+</html>

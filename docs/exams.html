@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>آزمون‌های آنلاین | مد‌ادو</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">مد‌ادو</a>
+      <nav class="nav" id="nav">
+        <a href="exams.html" class="active">آزمون‌ها</a>
+        <a href="videos.html">ویدیوها</a>
+        <a href="audio.html">صوت</a>
+        <a href="store.html">فروشگاه</a>
+        <a href="seminars.html">سمینارها</a>
+        <a href="dashboard.html" class="nav-dashboard">داشبورد</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <div class="page-header">
+        <div>
+          <h1>آزمون‌های آنلاین</h1>
+          <p class="muted">آزمون‌های تخصصی پزشکی با نمره‌دهی خودکار</p>
+        </div>
+        <button class="btn btn-primary" onclick="alert('فرم ساخت آزمون')">+ ساخت آزمون جدید</button>
+      </div>
+      <div class="list">
+        <div class="card list-item">
+          <div>
+            <span class="badge">فیزیولوژی</span>
+            <h2>آزمون فیزیولوژی سیستم قلبی-عروقی</h2>
+            <div class="meta"><span>۴۰ سوال</span><span>۶۰ دقیقه</span><span>۱۲۸۰ شرکت‌کننده</span></div>
+          </div>
+          <button class="btn btn-primary" onclick="startExam(this)">شروع آزمون</button>
+        </div>
+        <div class="card list-item">
+          <div>
+            <span class="badge">پاتولوژی</span>
+            <h2>آزمون پاتولوژی عمومی</h2>
+            <div class="meta"><span>۵۰ سوال</span><span>۷۵ دقیقه</span><span>۸۹۰ شرکت‌کننده</span></div>
+          </div>
+          <button class="btn btn-primary" onclick="startExam(this)">شروع آزمون</button>
+        </div>
+        <div class="card list-item">
+          <div>
+            <span class="badge">فارماکولوژی</span>
+            <h2>آزمون فارماکولوژی پایه</h2>
+            <div class="meta"><span>۳۵ سوال</span><span>۵۰ دقیقه</span><span>۲۱۰۰ شرکت‌کننده</span></div>
+          </div>
+          <button class="btn btn-primary" onclick="startExam(this)">شروع آزمون</button>
+        </div>
+      </div>
+      <div id="examBox" class="card exam-box hidden">
+        <h2 id="examTitle">آزمون</h2>
+        <p id="examTimer" class="muted">زمان باقی‌مانده: ۶۰:۰۰</p>
+        <div id="questionArea"></div>
+        <div class="exam-actions">
+          <button class="btn btn-secondary" onclick="prevQ()">قبلی</button>
+          <button class="btn btn-primary" onclick="nextQ()">بعدی</button>
+          <button class="btn btn-green" onclick="submitExam()">ثبت نهایی</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/exams.js"></script>
+</body>
+</html>

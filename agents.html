@@ -3,9 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Agent هوشمند | آریاز</title>
+  <title>هوش مصنوعی آریاز | Agentهای تخصصی</title>
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .ai-layout { display: grid; grid-template-columns: 280px 1fr; gap: 18px; min-height: 70vh; }
+    @media (max-width: 900px) { .ai-layout { grid-template-columns: 1fr; } }
+    .ai-sidebar { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 16px; max-height: 80vh; overflow-y: auto; }
+    .ai-main { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; min-height: 520px; }
+    .agent-item { display: block; width: 100%; text-align: right; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px; background: #f8fafc; cursor: pointer; font-family: inherit; transition: .15s; }
+    .agent-item:hover, .agent-item.active { border-color: #2563eb; background: #eff6ff; }
+    .agent-item h4 { font-size: .95rem; margin-bottom: 4px; }
+    .agent-item p { font-size: .78rem; color: #64748b; margin: 0; }
+    .lock-badge { font-size: .7rem; color: #b45309; background: #fef3c7; padding: 2px 8px; border-radius: 6px; }
+    .chat-header { padding: 16px 18px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .chat-body { flex: 1; padding: 18px; overflow-y: auto; max-height: 420px; background: #f8fafc; }
+    .chat-footer { padding: 14px; border-top: 1px solid #e2e8f0; display: flex; gap: 8px; flex-wrap: wrap; }
+    .chat-footer textarea { flex: 1; min-width: 200px; min-height: 48px; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; font-family: inherit; resize: vertical; }
+    .msg { margin-bottom: 12px; max-width: 90%; }
+    .msg.user { margin-right: auto; }
+    .msg.agent { margin-left: auto; }
+    .msg-bubble { padding: 12px 14px; border-radius: 14px; font-size: .92rem; line-height: 1.7; white-space: pre-wrap; }
+    .msg.user .msg-bubble { background: #dbeafe; }
+    .msg.agent .msg-bubble { background: #fff; border: 1px solid #e2e8f0; }
+    .msg-meta { font-size: .72rem; color: #94a3b8; margin-top: 4px; }
+    .empty-chat { text-align: center; padding: 48px 16px; color: #64748b; }
+    .quick-prompts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; justify-content: center; }
+    .quick-prompts button { font-size: .78rem; padding: 6px 10px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; font-family: inherit; }
+    .tabs-ai { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -13,11 +39,12 @@
       <a href="index.html" class="logo"><span>آ</span> آریاز</a>
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
-        <a href="paths.html">مسیر یادگیری</a>
+        <a href="paths.html">مسیرها</a>
         <a href="assessments.html">ارزیابی</a>
         <a href="library.html">کتابخانه</a>
         <a href="store.html">فروشگاه</a>
-        <a href="agents.html" class="active nav-cta">🤖 هوش مصنوعی</a>
+        <a href="agents.html" class="nav-cta">🤖 هوش مصنوعی</a>
+        <a href="membership.html">عضویت</a>
         <a href="dashboard.html">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
@@ -25,25 +52,59 @@
   </header>
   <main class="section">
     <div class="container">
-      <h1>🤖 هوش مصنوعی آریاز</h1>
-      <p class="muted mb-8">یک Agent انتخاب کنید، پیام بنویسید و پاسخ بگیرید. تاریخچه در همین مرورگر ذخیره می‌شود.</p>
-      <div class="grid-2" style="margin-bottom:24px">
-        <button type="button" class="card feature-card" onclick="selectAgent('کوچ رهبری')"><div class="icon icon-blue">🤖</div><h3>کوچ رهبری</h3><p>سبک رهبری و تصمیم تیمی</p></button>
-        <button type="button" class="card feature-card" onclick="selectAgent('مربی توسعه فردی')"><div class="icon icon-violet">🤖</div><h3>مربی توسعه فردی</h3><p>هدف‌گذاری و عادت</p></button>
-        <button type="button" class="card feature-card" onclick="selectAgent('مشاور HR')"><div class="icon icon-green">🤖</div><h3>مشاور HR</h3><p>منابع انسانی</p></button>
-        <button type="button" class="card feature-card" onclick="selectAgent('تحلیلگر بازخورد')"><div class="icon icon-amber">🤖</div><h3>تحلیلگر بازخورد</h3><p>بازخورد سازنده</p></button>
-      </div>
-      <div class="card" style="padding:20px">
-        <p id="agentName" style="font-weight:600">یک Agent انتخاب کنید</p>
-        <div id="chatLog" style="min-height:180px;max-height:320px;overflow-y:auto;margin:12px 0;padding:12px;background:#f8fafc;border-radius:12px"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <input id="chatInput" placeholder="مثلاً: چطور به همکارم بازخورد منفی بدهم؟" style="flex:1;min-width:200px;padding:12px;border-radius:10px;border:1px solid #e2e8f0;font-family:inherit" />
-          <button type="button" class="btn btn-primary" onclick="sendChat()">ارسال</button>
+      <div class="page-header">
+        <div>
+          <h1>🤖 یکپارچه‌سازی هوش مصنوعی</h1>
+          <p class="muted">Agent تخصصی · گفتگو · تاریخچه · خروجی ذخیره‌شده · سطح دسترسی</p>
         </div>
+        <span class="badge" id="planBadge">پلن: رایگان</span>
+      </div>
+      <div class="tabs-ai">
+        <button type="button" class="tab active" id="tabChat" onclick="showTab('chat')">گفتگو با Agent</button>
+        <button type="button" class="tab" id="tabHistory" onclick="showTab('history')">تاریخچه تعاملات</button>
+        <button type="button" class="tab" id="tabOutputs" onclick="showTab('outputs')">خروجی‌های ذخیره‌شده</button>
+      </div>
+      <div id="panelChat">
+        <div class="ai-layout">
+          <aside class="ai-sidebar">
+            <h3 style="font-size:.95rem;margin-bottom:12px">Agentهای تخصصی</h3>
+            <div id="agentList"></div>
+            <p class="muted" style="font-size:.78rem;margin-top:12px">دسترسی کامل با پلن حرفه‌ای. <a href="membership.html">ارتقاء</a></p>
+          </aside>
+          <section class="ai-main">
+            <div class="chat-header">
+              <div>
+                <strong id="activeAgentTitle">Agent انتخاب نشده</strong>
+                <p class="muted" id="activeAgentDesc" style="font-size:.85rem;margin:0">یک Agent انتخاب کنید</p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearCurrentChat()">پاک کردن گفتگو</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="saveLastOutput()">ذخیره آخرین پاسخ</button>
+              </div>
+            </div>
+            <div class="chat-body" id="chatBody">
+              <div class="empty-chat">
+                <div style="font-size:2.5rem">🤖</div>
+                <p>Agent را انتخاب کنید و سوال بپرسید</p>
+                <div class="quick-prompts" id="quickPrompts"></div>
+              </div>
+            </div>
+            <div class="chat-footer">
+              <textarea id="chatInput" placeholder="پیام خود را بنویسید..." rows="2"></textarea>
+              <button type="button" class="btn btn-primary" onclick="sendMessage()">ارسال</button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div id="panelHistory" class="hidden">
+        <div class="card" style="padding:20px"><h3 style="margin-bottom:12px">تاریخچه تعاملات</h3><div id="historyList"></div></div>
+      </div>
+      <div id="panelOutputs" class="hidden">
+        <div class="card" style="padding:20px"><h3 style="margin-bottom:12px">خروجی‌های ذخیره‌شده</h3><div id="outputsList"></div></div>
       </div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز — AI Integration</div></footer>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/agents.js"></script>
 </body>

@@ -11,63 +11,60 @@
 
 ---
 
-## ویژگی‌های اصلی
+## 🌐 نسخه آنلاین (GitHub Pages)
 
-| بخش | قابلیت‌ها |
-|------|-----------|
-| آزمون | ساخت آزمون، سوالات چندگزینه‌ای، زمان‌بندی، نمره‌دهی خودکار، گزارش عملکرد |
-| ویدیو | آپلود، پخش HLS/adaptive، زیرنویس، پیشرفت تماشا |
-| صوت | آپلود، پلیر اختصاصی، پلی‌لیست |
-| کتاب چاپی | کاتالوگ، سبد خرید، سفارش، پیگیری ارسال |
-| کتاب الکترونیک | پیش‌نمایش، خرید، دانلود امن |
-| سمینار | لیست رویدادها، جزئیات، ثبت‌نام، یادآوری |
+بعد از فعال‌سازی Pages، سایت در این آدرس در دسترس است:
 
-## ساختار پروژه
+**https://hamedsony60-a11y.github.io/medical-education-platform/**
 
-```
-medical-education-platform/
-├── public/
-├── src/
-│   ├── components/     # کامپوننت‌های UI مشترک
-│   ├── pages/          # صفحات اصلی
-│   ├── features/       # ماژول‌های تخصصی (exam, video, audio, store, seminar)
-│   ├── hooks/
-│   ├── services/       # API و سرویس‌ها
-│   ├── store/          # state management
-│   ├── styles/
-│   └── types/
-├── docs/
-└── package.json
-```
+### فعال‌سازی یک‌بار (حتماً انجام بده):
 
-## تکنولوژی پیشنهادی
+1. برو به ریپو → **Settings** → **Pages**
+2. در بخش **Source** گزینه **GitHub Actions** را انتخاب کن
+3. صبر کن تا Workflow سبز شود (تب Actions)
 
-- **Frontend:** Next.js 14 + React + TypeScript
-- **UI:** Tailwind CSS + shadcn/ui
-- **State:** Zustand / React Query
-- **Auth:** NextAuth.js
-- **Media:** Upload به S3/R2 + پخش با video.js یا Plyr
-- **Backend API:** (قابل اتصال به NestJS / Laravel / Django)
+هر بار که روی `main` پوش کنی، سایت خودکار آپدیت می‌شود.
 
-## شروع سریع
+---
+
+## توسعه محلی
 
 ```bash
 npm install
 npm run dev
 ```
 
-باز کردن: [http://localhost:3000](http://localhost:3000)
+باز کردن: http://localhost:3000
 
-## صفحات اصلی (UX Structure)
+برای بیلد استاتیک:
 
-1. **خانه** — معرفی پلتفرم، آخرین محتوا، سمینارهای پیش‌رو
-2. **آزمون‌ها** — لیست آزمون‌ها، فیلتر تخصص، شروع آزمون
-3. **ویدیوها** — کاتالوگ ویدیو، دسته‌بندی، پلیر
-4. **صوت** — کتابخانه صوتی
-5. **فروشگاه** — کتاب چاپی + الکترونیک
-6. **سمینارها** — تقویم و لیست رویدادها
-7. **داشبورد کاربر** — پیشرفت یادگیری، آزمون‌های من، خریدها
-8. **پنل ادمین/مدرس** — آپلود محتوا، مدیریت آزمون، آمار
+```bash
+npm run build
+```
+
+خروجی در پوشه `out/` قرار می‌گیرد.
+
+---
+
+## ساختار پروژه
+
+```
+medical-education-platform/
+├── .github/workflows/   # دیپلوی خودکار به GitHub Pages
+├── public/
+├── src/
+│   ├── app/             # صفحات (App Router)
+│   ├── components/
+│   └── types/
+└── docs/
+```
+
+## تکنولوژی
+
+- Next.js 14 (Static Export)
+- React + TypeScript
+- Tailwind CSS
+- GitHub Pages
 
 ## مجوز
 

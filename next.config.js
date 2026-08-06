@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
+const repoName = 'medical-education-platform';
+
 const nextConfig = {
-  reactStrictMode: true,
+  output: 'export',
+  basePath: process.env.NODE_ENV === 'production' ? `/${repoName}` : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? `/${repoName}/` : '',
   images: {
-    domains: ['localhost'],
+    unoptimized: true,
   },
+  trailingSlash: true,
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;

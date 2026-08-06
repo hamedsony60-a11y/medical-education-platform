@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>داشبورد | مد‌ادو</title>
+  <title>داشبورد | آریاز</title>
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo"><span>م</span> مد‌ادو</a>
+      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
       <nav class="nav" id="nav">
-        <a href="exams.html">آزمون‌ها</a>
-        <a href="videos.html">ویدیوها</a>
-        <a href="audio.html">صوت</a>
+        <a href="courses.html">دوره‌ها</a>
+        <a href="paths.html">مسیر یادگیری</a>
+        <a href="assessments.html">ارزیابی</a>
+        <a href="library.html">کتابخانه</a>
         <a href="store.html">فروشگاه</a>
-        <a href="seminars.html">سمینارها</a>
+        <a href="agents.html">Agent هوشمند</a>
         <a href="dashboard.html" class="active nav-cta">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
@@ -24,47 +25,45 @@
   </header>
   <main class="section">
     <div class="container">
-      <h1>داشبورد من</h1>
-      <p class="muted mb-6">پیشرفت یادگیری بر اساس فعالیت‌های شما در این مرورگر</p>
+      <h1>داشبورد کاربر</h1>
+      <p class="muted mb-6">پلن: <strong id="planLabel">رایگان</strong></p>
       <div class="stats-grid">
-        <div class="card stat-card"><p class="muted">آزمون‌ها</p><p class="stat-num" id="statExams">۰</p></div>
-        <div class="card stat-card"><p class="muted">میانگین نمره</p><p class="stat-num" id="statAvg">—</p></div>
-        <div class="card stat-card"><p class="muted">سفارش‌ها</p><p class="stat-num" id="statOrders">۰</p></div>
-        <div class="card stat-card"><p class="muted">سمینارها</p><p class="stat-num" id="statSeminars">۰</p></div>
+        <div class="card stat-card"><p class="muted">دوره‌های من</p><p class="stat-num" id="sCourses">۰</p></div>
+        <div class="card stat-card"><p class="muted">مسیرها</p><p class="stat-num" id="sPaths">۰</p></div>
+        <div class="card stat-card"><p class="muted">ارزیابی‌ها</p><p class="stat-num" id="sAssess">۰</p></div>
+        <div class="card stat-card"><p class="muted">سفارش‌ها</p><p class="stat-num" id="sOrders">۰</p></div>
       </div>
       <h2 class="mt-8">دسترسی سریع</h2>
       <div class="grid-4">
-        <a href="exams.html" class="card quick-link">📝 آزمون‌ها</a>
-        <a href="videos.html" class="card quick-link">🎬 ویدیوها</a>
+        <a href="courses.html" class="card quick-link">🎓 دوره‌ها</a>
+        <a href="paths.html" class="card quick-link">🗺️ مسیرها</a>
+        <a href="assessments.html" class="card quick-link">📋 ارزیابی</a>
+        <a href="agents.html" class="card quick-link">🤖 Agent</a>
+        <a href="library.html" class="card quick-link">📚 کتابخانه</a>
         <a href="store.html" class="card quick-link">🛒 فروشگاه</a>
-        <a href="seminars.html" class="card quick-link">📅 سمینارها</a>
+        <a href="membership.html" class="card quick-link">🔐 عضویت</a>
+        <a href="consult.html" class="card quick-link">📅 مشاوره</a>
       </div>
-      <h2 class="mt-8">نتایج آزمون</h2>
-      <div class="card"><ul class="activity-list" id="examResults"><li class="muted">هنوز آزمونی نداده‌اید</li></ul></div>
-      <h2 class="mt-8">آخرین فعالیت‌ها</h2>
-      <div class="card"><ul class="activity-list" id="activityList"><li class="muted">فعالیتی ثبت نشده</li></ul></div>
+      <h2 class="mt-8">فعالیت‌های اخیر</h2>
+      <div class="card"><ul class="activity-list" id="actList"><li class="muted">هنوز فعالیتی نیست — از دوره‌ها یا ارزیابی شروع کنید</li></ul></div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ مد‌ادو</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
   <script src="assets/js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var results = getStore('med_exam_results', []) || [];
-      var orders = getStore('med_orders', []) || [];
-      var seminars = getStore('med_seminars', []) || [];
-      var activity = getStore('med_activity', []) || [];
-      document.getElementById('statExams').textContent = results.length;
-      document.getElementById('statOrders').textContent = orders.length;
-      document.getElementById('statSeminars').textContent = seminars.length;
-      if (results.length) {
-        var avg = Math.round(results.reduce(function (s, r) { return s + r.score; }, 0) / results.length);
-        document.getElementById('statAvg').textContent = avg + '٪';
-        document.getElementById('examResults').innerHTML = results.slice(0, 8).map(function (r) {
-          return '<li><span>' + r.title + ' — <strong>' + r.score + '٪</strong></span><span class="time">' + r.time + '</span></li>';
-        }).join('');
-      }
-      if (activity.length) {
-        document.getElementById('activityList').innerHTML = activity.slice(0, 12).map(function (a) {
+      var courses = getStore('aryaz_courses', {}) || {};
+      var paths = getStore('aryaz_paths', {}) || {};
+      var assess = getStore('aryaz_assess', []) || [];
+      var orders = getStore('aryaz_orders', []) || [];
+      var act = getStore('med_activity', []) || [];
+      document.getElementById('planLabel').textContent = getStore('aryaz_plan', 'رایگان') || 'رایگان';
+      document.getElementById('sCourses').textContent = Object.keys(courses).length;
+      document.getElementById('sPaths').textContent = Object.keys(paths).length;
+      document.getElementById('sAssess').textContent = assess.length;
+      document.getElementById('sOrders').textContent = orders.length;
+      if (act.length) {
+        document.getElementById('actList').innerHTML = act.slice(0, 15).map(function (a) {
           return '<li><span>' + a.text + '</span><span class="time">' + a.time + '</span></li>';
         }).join('');
       }

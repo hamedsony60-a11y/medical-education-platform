@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent هوشمند | آریاز</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <nav class="nav" id="nav">
+        <a href="courses.html">دوره‌ها</a>
+        <a href="paths.html">مسیر یادگیری</a>
+        <a href="assessments.html">ارزیابی</a>
+        <a href="library.html">کتابخانه</a>
+        <a href="store.html">فروشگاه</a>
+        <a href="agents.html" class="active">Agent هوشمند</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <h1>AI Agents</h1>
+      <p class="muted mb-8">گفتگو با Agent تخصصی · ذخیره تاریخچه (دمو سمت کلاینت)</p>
+      <div class="grid-2" style="margin-bottom:24px">
+        <button class="card feature-card" onclick="selectAgent('کوچ رهبری')"><div class="icon icon-blue">🤖</div><h3>کوچ رهبری</h3><p>راهنمایی سبک رهبری و تصمیم‌های تیمی</p></button>
+        <button class="card feature-card" onclick="selectAgent('مربی توسعه فردی')"><div class="icon icon-violet">🤖</div><h3>مربی توسعه فردی</h3><p>هدف‌گذاری و عادت‌سازی</p></button>
+        <button class="card feature-card" onclick="selectAgent('مشاور HR')"><div class="icon icon-green">🤖</div><h3>مشاور HR</h3><p>پاسخ به سناریوهای منابع انسانی</p></button>
+        <button class="card feature-card" onclick="selectAgent('تحلیلگر بازخورد')"><div class="icon icon-amber">🤖</div><h3>تحلیلگر بازخورد</h3><p>ساختاردهی به بازخورد سازنده</p></button>
+      </div>
+      <div class="card" style="padding:20px">
+        <p class="muted" id="agentName">یک Agent انتخاب کنید</p>
+        <div id="chatLog" style="min-height:160px;max-height:280px;overflow-y:auto;margin:12px 0;padding:12px;background:#f8fafc;border-radius:12px"></div>
+        <div style="display:flex;gap:8px">
+          <input id="chatInput" placeholder="پیام شما..." style="flex:1;padding:12px;border-radius:10px;border:1px solid #e2e8f0;font-family:inherit" />
+          <button class="btn btn-primary" onclick="sendChat()">ارسال</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/agents.js"></script>
+</body>
+</html>

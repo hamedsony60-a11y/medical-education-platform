@@ -1,50 +1,64 @@
-var cart = getStore('med_cart', []) || [];
+var products = [
+  { id: 's1', name: 'رهبری تیمی در سازمان', type: 'course', price: 890000 },
+  { id: 's2', name: 'مدیریت عملکرد کارکنان', type: 'course', price: 750000 },
+  { id: 's3', name: 'بسته کتاب مهارت نرم', type: 'book', price: 320000 },
+  { id: 's4', name: 'چک‌لیست ارزیابی عملکرد', type: 'tool', price: 120000 },
+  { id: 's5', name: 'Canvas توسعه فردی', type: 'tool', price: 90000 },
+  { id: 's6', name: 'Agent کوچ رهبری', type: 'agent', price: 450000 },
+  { id: 's7', name: 'بسته تخصصی HR', type: 'course', price: 1500000 }
+];
+var cart = getStore('aryaz_cart', []) || [];
+var filter = 'all';
 
 document.querySelectorAll('.tab').forEach(function (tab) {
   tab.addEventListener('click', function () {
     document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
     tab.classList.add('active');
-    var id = tab.getAttribute('data-tab');
-    document.getElementById('print').classList.toggle('hidden', id !== 'print');
-    document.getElementById('ebook').classList.toggle('hidden', id !== 'ebook');
+    filter = tab.getAttribute('data-tab');
+    renderStore();
   });
 });
 
-function addToCart(name, price) {
-  cart.push({ name: name, price: price || 0 });
-  setStore('med_cart', cart);
-  updateCart();
-  toast('«' + name + '» به سبد اضافه شد');
-  addActivity('افزودن به سبد: ' + name);
+function renderStore() {
+  var list = products.filter(function (p) { return filter === 'all' || p.type === filter; });
+  var icons = { course: '🎓', book: '📘', tool: '🛠️', agent: '🤖' };
+  document.getElementById('storeGrid').innerHTML = list.map(function (p) {
+    return '<div class="card product-card"><div class="product-cover">' + (icons[p.type] || '📦') + '</div>' +
+      '<div class="card-body"><span class="badge">' + p.type + '</span><h3>' + p.name + '</h3>' +
+      '<p class="price">' + p.price.toLocaleString('fa-IR') + ' تومان</p>' +
+      '<button class="btn btn-primary btn-block" onclick="addToCart(\'' + p.id + '\')">افزودن به سبد</button></div></div>';
+  }).join('');
 }
 
-function buyEbook(name) {
-  var buys = getStore('med_ebooks', []) || [];
-  buys.unshift({ name: name, time: new Date().toLocaleString('fa-IR') });
-  setStore('med_ebooks', buys.slice(0, 20));
-  addActivity('خرید eBook: ' + name);
-  toast('خرید «' + name + '» انجام شد');
+function addToCart(id) {
+  var p = products.find(function (x) { return x.id === id; });
+  if (!p) return;
+  cart.push(p);
+  setStore('aryaz_cart', cart);
+  updateCart();
+  toast('به سبد اضافه شد');
+  addActivity('سبد: ' + p.name);
 }
 
 function updateCart() {
-  var bar = document.getElementById('cartBar');
   document.getElementById('cartCount').textContent = cart.length;
-  var total = cart.reduce(function (s, i) { return s + (i.price || 0); }, 0);
+  var total = cart.reduce(function (s, i) { return s + i.price; }, 0);
   document.getElementById('cartTotal').textContent = total.toLocaleString('fa-IR');
-  if (cart.length > 0) bar.classList.add('show');
-  else bar.classList.remove('show');
+  document.getElementById('cartBar').classList.toggle('show', cart.length > 0);
 }
 
 function checkout() {
   if (!cart.length) return;
-  var orders = getStore('med_orders', []) || [];
-  orders.unshift({ items: cart.slice(), time: new Date().toLocaleString('fa-IR') });
-  setStore('med_orders', orders.slice(0, 20));
-  addActivity('ثبت سفارش: ' + cart.length + ' مورد');
-  toast('سفارش ثبت شد');
+  var orders = getStore('aryaz_orders', []) || [];
+  var total = cart.reduce(function (s, i) { return s + i.price; }, 0);
+  orders.unshift({ items: cart.map(function (c) { return c.name; }), total: total, time: new Date().toLocaleString('fa-IR') });
+  setStore('aryaz_orders', orders.slice(0, 20));
+  addActivity('پرداخت سفارش: ' + total.toLocaleString('fa-IR') + ' تومان');
+  toast('فاکتور صادر شد — سفارش ثبت گردید');
   cart = [];
-  setStore('med_cart', cart);
+  setStore('aryaz_cart', cart);
   updateCart();
 }
 
+renderStore();
 updateCart();

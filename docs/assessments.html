@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>فروشگاه | آریاز</title>
+  <title>موتور ارزیابی | آریاز</title>
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
@@ -14,9 +14,9 @@
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
         <a href="paths.html">مسیر یادگیری</a>
-        <a href="assessments.html">ارزیابی</a>
+        <a href="assessments.html" class="active">ارزیابی</a>
         <a href="library.html">کتابخانه</a>
-        <a href="store.html" class="active">فروشگاه</a>
+        <a href="store.html">فروشگاه</a>
         <a href="agents.html">Agent هوشمند</a>
         <a href="dashboard.html" class="nav-cta">داشبورد</a>
       </nav>
@@ -25,23 +25,22 @@
   </header>
   <main class="section">
     <div class="container">
-      <h1>Marketplace</h1>
-      <p class="muted mb-8">دوره، کتاب، آزمون، ابزار و Agent</p>
-      <div class="tabs">
-        <button class="tab active" data-tab="all">همه</button>
-        <button class="tab" data-tab="course">دوره</button>
-        <button class="tab" data-tab="book">کتاب</button>
-        <button class="tab" data-tab="tool">ابزار</button>
-        <button class="tab" data-tab="agent">Agent</button>
-      </div>
-      <div class="grid-3" id="storeGrid"></div>
-      <div class="cart-bar" id="cartBar">سبد: <span id="cartCount">۰</span> · <span id="cartTotal">۰</span> تومان
-        <button class="btn btn-white btn-sm" onclick="checkout()">پرداخت و فاکتور</button>
+      <h1>Assessment Engine</h1>
+      <p class="muted mb-8">چندگزینه‌ای، طیف لیکرت، تشریحی + گزارش و پیشنهاد مسیر</p>
+      <div class="list" id="assessList"></div>
+      <div id="assessBox" class="card exam-box hidden">
+        <h2 id="aTitle"></h2>
+        <div id="aArea"></div>
+        <div class="exam-actions">
+          <button class="btn btn-secondary" onclick="prevA()">قبلی</button>
+          <button class="btn btn-primary" onclick="nextA()">بعدی</button>
+          <button class="btn btn-green" onclick="submitA()">ثبت و تحلیل</button>
+        </div>
       </div>
     </div>
   </main>
   <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/store.js"></script>
+  <script src="assets/js/assessments.js"></script>
 </body>
 </html>

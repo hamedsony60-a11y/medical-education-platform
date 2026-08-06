@@ -10,14 +10,14 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">مد‌ادو</a>
+      <a href="index.html" class="logo"><span>م</span> مد‌ادو</a>
       <nav class="nav" id="nav">
         <a href="exams.html">آزمون‌ها</a>
         <a href="videos.html">ویدیوها</a>
         <a href="audio.html">صوت</a>
         <a href="store.html" class="active">فروشگاه</a>
         <a href="seminars.html">سمینارها</a>
-        <a href="dashboard.html" class="nav-dashboard">داشبورد</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
@@ -25,28 +25,30 @@
   <main class="section">
     <div class="container">
       <h1>فروشگاه کتاب</h1>
-      <p class="muted mb-8">کتاب‌های چاپی و الکترونیکی پزشکی</p>
+      <p class="muted mb-8">کتاب چاپی و الکترونیکی پزشکی</p>
       <div class="tabs">
         <button class="tab active" data-tab="print">کتاب چاپی</button>
         <button class="tab" data-tab="ebook">کتاب الکترونیک</button>
       </div>
       <div id="print" class="tab-panel">
         <div class="grid-3">
-          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>فیزیولوژی گایتون</h3><p class="muted">چاپ پانزدهم</p><p class="price">۱٬۲۵۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('فیزیولوژی گایتون')">افزودن به سبد</button></div></div>
-          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>پاتولوژی رابینز</h3><p class="muted">ویرایش دهم</p><p class="price">۹۸۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('پاتولوژی رابینز')">افزودن به سبد</button></div></div>
-          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>آناتومی گری</h3><p class="muted">جلد اول</p><p class="price">۱٬۱۰۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('آناتومی گری')">افزودن به سبد</button></div></div>
+          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>فیزیولوژی گایتون</h3><p class="muted">چاپ پانزدهم</p><p class="price">۱٬۲۵۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('فیزیولوژی گایتون',1250000)">افزودن به سبد</button></div></div>
+          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>پاتولوژی رابینز</h3><p class="muted">ویرایش دهم</p><p class="price">۹۸۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('پاتولوژی رابینز',980000)">افزودن به سبد</button></div></div>
+          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>آناتومی گری</h3><p class="muted">جلد اول</p><p class="price">۱٬۱۰۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('آناتومی گری',1100000)">افزودن به سبد</button></div></div>
+          <div class="card product-card"><div class="product-cover">📖</div><div class="card-body"><h3>فارماکولوژی کاتزونگ</h3><p class="muted">ویرایش چهاردهم</p><p class="price">۸۵۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="addToCart('فارماکولوژی کاتزونگ',850000)">افزودن به سبد</button></div></div>
         </div>
       </div>
       <div id="ebook" class="tab-panel hidden">
         <div class="grid-3">
           <div class="card product-card"><div class="product-cover ebook">📱</div><div class="card-body"><h3>ECG آسان</h3><p class="muted">نسخه الکترونیک</p><p class="price">۱۸۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="buyEbook('ECG آسان')">خرید و دانلود</button></div></div>
           <div class="card product-card"><div class="product-cover ebook">📱</div><div class="card-body"><h3>فارماکولوژی بالینی</h3><p class="muted">نسخه الکترونیک</p><p class="price">۲۲۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="buyEbook('فارماکولوژی بالینی')">خرید و دانلود</button></div></div>
+          <div class="card product-card"><div class="product-cover ebook">📱</div><div class="card-body"><h3>اورژانس‌های داخلی</h3><p class="muted">نسخه الکترونیک</p><p class="price">۱۵۰٬۰۰۰ تومان</p><button class="btn btn-primary btn-block" onclick="buyEbook('اورژانس‌های داخلی')">خرید و دانلود</button></div></div>
         </div>
       </div>
-      <div class="cart-bar" id="cartBar">سبد: <span id="cartCount">۰</span> مورد <button class="btn btn-white btn-sm" onclick="checkout()">تسویه</button></div>
+      <div class="cart-bar" id="cartBar">سبد: <span id="cartCount">۰</span> مورد · <span id="cartTotal">۰</span> تومان <button class="btn btn-white btn-sm" onclick="checkout()">تسویه</button></div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ مد‌ادو</div></footer>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/store.js"></script>
 </body>

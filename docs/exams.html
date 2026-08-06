@@ -10,56 +10,48 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">مد‌ادو</a>
+      <a href="index.html" class="logo"><span>م</span> مد‌ادو</a>
       <nav class="nav" id="nav">
         <a href="exams.html" class="active">آزمون‌ها</a>
         <a href="videos.html">ویدیوها</a>
         <a href="audio.html">صوت</a>
         <a href="store.html">فروشگاه</a>
         <a href="seminars.html">سمینارها</a>
-        <a href="dashboard.html" class="nav-dashboard">داشبورد</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
   </header>
+
   <main class="section">
     <div class="container">
       <div class="page-header">
         <div>
           <h1>آزمون‌های آنلاین</h1>
-          <p class="muted">آزمون‌های تخصصی پزشکی با نمره‌دهی خودکار</p>
+          <p class="muted">سوالات استاندارد، تایمر و نمره‌دهی خودکار</p>
         </div>
-        <button class="btn btn-primary" onclick="alert('فرم ساخت آزمون')">+ ساخت آزمون جدید</button>
+        <button class="btn btn-primary" onclick="openCreateExam()">+ ساخت آزمون</button>
       </div>
-      <div class="list">
-        <div class="card list-item">
-          <div>
-            <span class="badge">فیزیولوژی</span>
-            <h2>آزمون فیزیولوژی سیستم قلبی-عروقی</h2>
-            <div class="meta"><span>۴۰ سوال</span><span>۶۰ دقیقه</span><span>۱۲۸۰ شرکت‌کننده</span></div>
-          </div>
-          <button class="btn btn-primary" onclick="startExam(this)">شروع آزمون</button>
-        </div>
-        <div class="card list-item">
-          <div>
-            <span class="badge">پاتولوژی</span>
-            <h2>آزمون پاتولوژی عمومی</h2>
-            <div class="meta"><span>۵۰ سوال</span><span>۷۵ دقیقه</span><span>۸۹۰ شرکت‌کننده</span></div>
-          </div>
-          <button class="btn btn-primary" onclick="startExam(this)">شروع آزمون</button>
-        </div>
-        <div class="card list-item">
-          <div>
-            <span class="badge">فارماکولوژی</span>
-            <h2>آزمون فارماکولوژی پایه</h2>
-            <div class="meta"><span>۳۵ سوال</span><span>۵۰ دقیقه</span><span>۲۱۰۰ شرکت‌کننده</span></div>
-          </div>
-          <button class="btn btn-primary" onclick="startExam(this)">شروع آزمون</button>
-        </div>
+
+      <div class="toolbar">
+        <div class="search-box"><input type="search" id="examSearch" placeholder="جستجوی آزمون..." oninput="filterExams()" /></div>
+        <select class="filter-select" id="examFilter" onchange="filterExams()">
+          <option value="">همه تخصص‌ها</option>
+          <option value="فیزیولوژی">فیزیولوژی</option>
+          <option value="پاتولوژی">پاتولوژی</option>
+          <option value="فارماکولوژی">فارماکولوژی</option>
+          <option value="آناتومی">آناتومی</option>
+        </select>
       </div>
+
+      <div class="list" id="examList"></div>
+
       <div id="examBox" class="card exam-box hidden">
         <h2 id="examTitle">آزمون</h2>
-        <p id="examTimer" class="muted">زمان باقی‌مانده: ۶۰:۰۰</p>
+        <div class="exam-progress">
+          <p id="examTimer" class="muted">زمان باقی‌مانده: ۶۰:۰۰</p>
+          <div class="progress-bar"><span id="examProgressBar" style="width:0%"></span></div>
+        </div>
         <div id="questionArea"></div>
         <div class="exam-actions">
           <button class="btn btn-secondary" onclick="prevQ()">قبلی</button>
@@ -69,7 +61,22 @@
       </div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+
+  <div id="createModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeCreateExam()">×</button>
+      <h2 style="margin-bottom:16px">ساخت آزمون جدید</h2>
+      <div class="form-group"><label>عنوان</label><input id="newTitle" placeholder="مثال: آزمون آناتومی سر و گردن" /></div>
+      <div class="form-group"><label>تخصص</label>
+        <select id="newSpec"><option>فیزیولوژی</option><option>پاتولوژی</option><option>فارماکولوژی</option><option>آناتومی</option></select>
+      </div>
+      <div class="form-group"><label>تعداد سوال (نمایشی)</label><input id="newQ" type="number" value="20" min="5" /></div>
+      <div class="form-group"><label>مدت (دقیقه)</label><input id="newDur" type="number" value="30" min="5" /></div>
+      <button class="btn btn-primary btn-block" onclick="saveNewExam()">ذخیره آزمون</button>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ مد‌ادو</div></footer>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/exams.js"></script>
 </body>

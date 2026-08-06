@@ -10,14 +10,14 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">مد‌ادو</a>
+      <a href="index.html" class="logo"><span>م</span> مد‌ادو</a>
       <nav class="nav" id="nav">
         <a href="exams.html">آزمون‌ها</a>
         <a href="videos.html">ویدیوها</a>
         <a href="audio.html">صوت</a>
         <a href="store.html">فروشگاه</a>
         <a href="seminars.html">سمینارها</a>
-        <a href="dashboard.html" class="active nav-dashboard">داشبورد</a>
+        <a href="dashboard.html" class="active nav-cta">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
@@ -25,11 +25,12 @@
   <main class="section">
     <div class="container">
       <h1>داشبورد من</h1>
+      <p class="muted mb-6">پیشرفت یادگیری بر اساس فعالیت‌های شما در این مرورگر</p>
       <div class="stats-grid">
-        <div class="card stat-card"><p class="muted">آزمون‌های انجام‌شده</p><p class="stat-num">۱۲</p></div>
-        <div class="card stat-card"><p class="muted">ساعت تماشای ویدیو</p><p class="stat-num">۴۸</p></div>
-        <div class="card stat-card"><p class="muted">خریدها</p><p class="stat-num">۵</p></div>
-        <div class="card stat-card"><p class="muted">سمینارها</p><p class="stat-num">۲</p></div>
+        <div class="card stat-card"><p class="muted">آزمون‌ها</p><p class="stat-num" id="statExams">۰</p></div>
+        <div class="card stat-card"><p class="muted">میانگین نمره</p><p class="stat-num" id="statAvg">—</p></div>
+        <div class="card stat-card"><p class="muted">سفارش‌ها</p><p class="stat-num" id="statOrders">۰</p></div>
+        <div class="card stat-card"><p class="muted">سمینارها</p><p class="stat-num" id="statSeminars">۰</p></div>
       </div>
       <h2 class="mt-8">دسترسی سریع</h2>
       <div class="grid-4">
@@ -38,9 +39,36 @@
         <a href="store.html" class="card quick-link">🛒 فروشگاه</a>
         <a href="seminars.html" class="card quick-link">📅 سمینارها</a>
       </div>
+      <h2 class="mt-8">نتایج آزمون</h2>
+      <div class="card"><ul class="activity-list" id="examResults"><li class="muted">هنوز آزمونی نداده‌اید</li></ul></div>
+      <h2 class="mt-8">آخرین فعالیت‌ها</h2>
+      <div class="card"><ul class="activity-list" id="activityList"><li class="muted">فعالیتی ثبت نشده</li></ul></div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ مد‌ادو</div></footer>
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var results = getStore('med_exam_results', []) || [];
+      var orders = getStore('med_orders', []) || [];
+      var seminars = getStore('med_seminars', []) || [];
+      var activity = getStore('med_activity', []) || [];
+      document.getElementById('statExams').textContent = results.length;
+      document.getElementById('statOrders').textContent = orders.length;
+      document.getElementById('statSeminars').textContent = seminars.length;
+      if (results.length) {
+        var avg = Math.round(results.reduce(function (s, r) { return s + r.score; }, 0) / results.length);
+        document.getElementById('statAvg').textContent = avg + '٪';
+        document.getElementById('examResults').innerHTML = results.slice(0, 8).map(function (r) {
+          return '<li><span>' + r.title + ' — <strong>' + r.score + '٪</strong></span><span class="time">' + r.time + '</span></li>';
+        }).join('');
+      }
+      if (activity.length) {
+        document.getElementById('activityList').innerHTML = activity.slice(0, 12).map(function (a) {
+          return '<li><span>' + a.text + '</span><span class="time">' + a.time + '</span></li>';
+        }).join('');
+      }
+    });
+  </script>
 </body>
 </html>

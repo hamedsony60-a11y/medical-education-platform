@@ -10,14 +10,14 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">مد‌ادو</a>
+      <a href="index.html" class="logo"><span>م</span> مد‌ادو</a>
       <nav class="nav" id="nav">
         <a href="exams.html">آزمون‌ها</a>
         <a href="videos.html" class="active">ویدیوها</a>
         <a href="audio.html">صوت</a>
         <a href="store.html">فروشگاه</a>
         <a href="seminars.html">سمینارها</a>
-        <a href="dashboard.html" class="nav-dashboard">داشبورد</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
@@ -27,38 +27,34 @@
       <div class="page-header">
         <div>
           <h1>ویدیوهای آموزشی</h1>
-          <p class="muted">محتوای ویدیویی تخصصی پزشکی</p>
+          <p class="muted">درس‌گفتار تخصصی با پیگیری پیشرفت</p>
         </div>
         <button class="btn btn-primary" onclick="document.getElementById('uploadVideo').click()">آپلود ویدیو</button>
         <input type="file" id="uploadVideo" accept="video/*" hidden onchange="handleVideoUpload(this)" />
       </div>
-      <div class="grid-3" id="videoGrid">
-        <article class="card video-card">
-          <div class="video-thumb" onclick="playDemo(this)"><span class="play-btn">▶</span><span class="duration">۴۲:۱۵</span></div>
-          <div class="card-body"><span class="badge">آناتومی</span><h3>آناتومی قلب — بخش اول</h3><p class="muted">دکتر رضایی · ۵۴۰۰ بازدید</p></div>
-        </article>
-        <article class="card video-card">
-          <div class="video-thumb" onclick="playDemo(this)"><span class="play-btn">▶</span><span class="duration">۵۸:۳۰</span></div>
-          <div class="card-body"><span class="badge">کاردیولوژی</span><h3>مبانی الکتروکاردیوگرافی</h3><p class="muted">دکتر کریمی · ۳۲۰۰ بازدید</p></div>
-        </article>
-        <article class="card video-card">
-          <div class="video-thumb" onclick="playDemo(this)"><span class="play-btn">▶</span><span class="duration">۳۵:۰۰</span></div>
-          <div class="card-body"><span class="badge">آزمایشگاه</span><h3>تفسیر آزمایش‌های خون</h3><p class="muted">دکتر محمدی · ۷۸۰۰ بازدید</p></div>
-        </article>
+      <div class="toolbar">
+        <div class="search-box"><input type="search" id="videoSearch" placeholder="جستجوی ویدیو..." oninput="filterVideos()" /></div>
+        <select class="filter-select" id="videoFilter" onchange="filterVideos()">
+          <option value="">همه دسته‌ها</option>
+          <option value="آناتومی">آناتومی</option>
+          <option value="کاردیولوژی">کاردیولوژی</option>
+          <option value="آزمایشگاه">آزمایشگاه</option>
+        </select>
       </div>
+      <div class="grid-3" id="videoGrid"></div>
       <div id="playerModal" class="modal hidden">
         <div class="modal-content">
           <button class="modal-close" onclick="closePlayer()">×</button>
           <h3 id="playerTitle">پخش ویدیو</h3>
           <div class="player-placeholder">
-            <p>در نسخه کامل، پلیر ویدیو اینجا نمایش داده می‌شود.</p>
+            <p id="playerHint">در نسخه کامل پلیر استریم اینجا قرار می‌گیرد.</p>
             <video id="localVideo" controls class="hidden" style="width:100%;border-radius:12px;margin-top:12px"></video>
           </div>
         </div>
       </div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ مد‌ادو</div></footer>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/videos.js"></script>
 </body>

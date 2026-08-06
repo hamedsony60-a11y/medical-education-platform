@@ -10,14 +10,14 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">مد‌ادو</a>
+      <a href="index.html" class="logo"><span>م</span> مد‌ادو</a>
       <nav class="nav" id="nav">
         <a href="exams.html">آزمون‌ها</a>
         <a href="videos.html">ویدیوها</a>
         <a href="audio.html">صوت</a>
         <a href="store.html">فروشگاه</a>
         <a href="seminars.html" class="active">سمینارها</a>
-        <a href="dashboard.html" class="nav-dashboard">داشبورد</a>
+        <a href="dashboard.html" class="nav-cta">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
@@ -25,27 +25,43 @@
   <main class="section">
     <div class="container">
       <h1>سمینارهای پزشکی</h1>
-      <p class="muted mb-8">معرفی و ثبت‌نام در سمینارها و وبینارها</p>
-      <div class="list">
-        <div class="card list-item">
-          <div>
-            <h2>سمینار تازه‌های کاردیولوژی ۱۴۰۵</h2>
-            <div class="meta"><span>📅 ۱۵ شهریور ۱۴۰۵</span><span>📍 تهران</span><span>👥 ۱۴۵ / ۲۰۰</span></div>
-          </div>
-          <button class="btn btn-primary" onclick="registerSeminar(this,'کاردیولوژی')">ثبت‌نام</button>
-        </div>
-        <div class="card list-item">
-          <div>
-            <h2>وبینار مدیریت دیابت نوع ۲</h2>
-            <div class="meta"><span>📅 ۲۲ شهریور ۱۴۰۵</span><span>📍 آنلاین</span><span>👥 ۳۱۲ / ۵۰۰</span></div>
-          </div>
-          <button class="btn btn-primary" onclick="registerSeminar(this,'دیابت')">ثبت‌نام</button>
-        </div>
-      </div>
+      <p class="muted mb-8">ثبت‌نام در سمینار حضوری و وبینار آنلاین</p>
+      <div class="list" id="seminarList"></div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ پلتفرم آموزش آکادمیک پزشکی</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ مد‌ادو</div></footer>
   <script src="assets/js/main.js"></script>
-  <script>function registerSeminar(btn,name){btn.textContent='ثبت‌نام شد ✓';btn.disabled=true;btn.classList.add('btn-green');alert('ثبت‌نام در «'+name+'» انجام شد.');}</script>
+  <script>
+    var seminars = [
+      { id: '1', title: 'سمینار تازه‌های کاردیولوژی ۱۴۰۵', date: '۱۵ شهریور ۱۴۰۵', location: 'تهران — سالن رازی', registered: 145, capacity: 200 },
+      { id: '2', title: 'وبینار مدیریت دیابت نوع ۲', date: '۲۲ شهریور ۱۴۰۵', location: 'آنلاین', registered: 312, capacity: 500 },
+      { id: '3', title: 'کارگاه تفسیر MRI مغز', date: '۵ مهر ۱۴۰۵', location: 'اصفهان', registered: 48, capacity: 80 },
+      { id: '4', title: 'سمینار اورژانس‌های اطفال', date: '۱۲ مهر ۱۴۰۵', location: 'شیراز', registered: 90, capacity: 150 }
+    ];
+    function render() {
+      var regs = getStore('med_seminars', []) || [];
+      document.getElementById('seminarList').innerHTML = seminars.map(function (s) {
+        var done = regs.indexOf(s.id) !== -1;
+        return '<div class="card list-item"><div><h2>' + s.title + '</h2>' +
+          '<div class="meta"><span>📅 ' + s.date + '</span><span>📍 ' + s.location + '</span>' +
+          '<span>👥 ' + s.registered + ' / ' + s.capacity + '</span></div></div>' +
+          (done
+            ? '<button class="btn btn-green" disabled>ثبت‌نام شد ✓</button>'
+            : '<button class="btn btn-primary" onclick="register(\'' + s.id + '\',\'' + s.title.replace(/'/g,'') + '\',this)">ثبت‌نام</button>') +
+          '</div>';
+      }).join('');
+    }
+    function register(id, title, btn) {
+      var regs = getStore('med_seminars', []) || [];
+      if (regs.indexOf(id) === -1) regs.push(id);
+      setStore('med_seminars', regs);
+      addActivity('ثبت‌نام سمینار: ' + title);
+      toast('ثبت‌نام انجام شد');
+      btn.textContent = 'ثبت‌نام شد ✓';
+      btn.disabled = true;
+      btn.className = 'btn btn-green';
+    }
+    document.addEventListener('DOMContentLoaded', render);
+  </script>
 </body>
 </html>

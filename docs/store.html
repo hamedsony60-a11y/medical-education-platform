@@ -25,7 +25,11 @@
   <main class="section">
     <div class="container">
       <h1>فروشگاه</h1>
-      <p class="muted mb-8">دوره، کتاب، ابزار و Agent</p>
+      <p class="muted mb-6">دوره، کتاب، ابزار و Agent — کد تخفیف نمونه: ARIAZ20</p>
+      <div class="toolbar">
+        <input id="couponInput" placeholder="کد تخفیف" style="padding:11px 14px;border:1px solid #e2e8f0;border-radius:12px;font-family:inherit" />
+        <button class="btn btn-secondary" onclick="applyCoupon()">اعمال کد</button>
+      </div>
       <div class="tabs">
         <button class="tab active" data-tab="all">همه</button>
         <button class="tab" data-tab="course">دوره</button>
@@ -34,8 +38,9 @@
         <button class="tab" data-tab="agent">Agent</button>
       </div>
       <div class="grid-3" id="storeGrid"></div>
+      <div id="lastInvoice"></div>
       <div class="cart-bar" id="cartBar">سبد: <span id="cartCount">۰</span> · <span id="cartTotal">۰</span> تومان
-        <button class="btn btn-white btn-sm" onclick="checkout()">پرداخت</button>
+        <button class="btn btn-white btn-sm" onclick="checkout()">پرداخت و فاکتور</button>
       </div>
     </div>
   </main>

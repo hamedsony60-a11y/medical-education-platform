@@ -25,18 +25,21 @@
   <main class="section">
     <div class="container">
       <h1>کتابخانه دیجیتال</h1>
-      <p class="muted mb-8">خلاصه، مطالعه و علاقه‌مندی</p>
+      <p class="muted mb-6">خلاصه، فصل‌به‌فصل، علاقه‌مندی و پیشرفت مطالعه</p>
+      <div class="toolbar">
+        <div class="search-box"><input type="search" id="bookSearch" placeholder="جستجوی کتاب یا نویسنده..." /></div>
+      </div>
       <div class="grid-3" id="bookGrid"></div>
       <div id="bookModal" class="modal hidden">
         <div class="modal-content">
           <button class="modal-close" onclick="document.getElementById('bookModal').classList.add('hidden')">×</button>
           <h2 id="bTitle"></h2>
           <p class="muted" id="bAuthor"></p>
-          <p id="bSummary" style="margin:14px 0;line-height:1.8"></p>
+          <div id="bSummary" style="margin:14px 0;line-height:1.8"></div>
           <div class="progress-bar"><span id="bBar" style="width:0%"></span></div>
-          <p class="muted" id="bPct" style="margin:8px 0 14px">۰٪ مطالعه</p>
+          <p class="muted" id="bPct" style="margin:8px 0 14px">۰٪</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" onclick="readMore()">ادامه مطالعه</button>
+            <button class="btn btn-primary" onclick="readMore()">ادامه فصل بعد</button>
             <button class="btn btn-secondary" onclick="toggleFav()">علاقه‌مندی</button>
           </div>
         </div>

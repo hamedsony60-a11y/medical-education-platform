@@ -1,112 +1,60 @@
+/* Aryaz AI Agents v3 — real structured replies */
 var AGENTS = [
-  {
-    id: 'leader',
-    name: 'کوچ رهبری',
-    desc: 'سبک رهبری، تفویض، انگیزش تیم',
-    access: 'free',
-    prompts: ['چطور اعتماد تیم را بسازم؟', 'تفویض اختیار را از کجا شروع کنم؟', 'جلسه یک‌به‌یک چگونه باشد؟'],
-    system: 'leadership'
-  },
-  {
-    id: 'growth',
-    name: 'مربی توسعه فردی',
-    desc: 'هدف‌گذاری، عادت، خودآگاهی',
-    access: 'free',
-    prompts: ['یک هدف ۳۰ روزه پیشنهاد بده', 'چطور عادت مطالعه بسازم؟', 'مدیریت زمان برای مدیر پرمشغله'],
-    system: 'growth'
-  },
-  {
-    id: 'hr',
-    name: 'مشاور HR',
-    desc: 'جذب، عملکرد، تعارض سازمانی',
-    access: 'pro',
-    prompts: ['چارچوب جلسه بازخورد عملکرد', 'چطور استعفای خاموش را تشخیص دهم؟', 'چک‌لیست آنبوردینگ ۳۰ روزه'],
-    system: 'hr'
-  },
-  {
-    id: 'feedback',
-    name: 'تحلیلگر بازخورد',
-    desc: 'ساختار بازخورد سازنده (SBI)',
-    access: 'pro',
-    prompts: ['بازخورد تأخیر مکرر را بنویس', 'بازخورد مثبت قوی بساز', 'بازخورد به همکار مقاوم'],
-    system: 'feedback'
-  },
-  {
-    id: 'soft',
-    name: 'مربی مهارت نرم',
-    desc: 'ارتباط، مذاکره، هوش هیجانی',
-    access: 'pro',
-    prompts: ['در تعارض تیمی چه بگویم؟', 'مهارت گوش دادن فعال', 'مذاکره حقوق'],
-    system: 'soft'
-  },
-  {
-    id: 'org',
-    name: 'مشاور سازمانی',
-    desc: 'فرهنگ، تغییر، تیم‌های چندنقشی',
-    access: 'org',
-    prompts: ['نقشه راه تغییر فرهنگ', 'شاخص‌های سلامت تیم', 'هم‌راستایی استراتژی و افراد'],
-    system: 'org'
-  }
+  { id: 'leader', name: 'کوچ رهبری', desc: 'سبک رهبری، تفویض، انگیزش تیم', access: 'free', prompts: ['چطور اعتماد تیم را بسازم؟', 'تفویض اختیار را از کجا شروع کنم؟', 'جلسه یک‌به‌یک چگونه باشد؟'], system: 'leadership' },
+  { id: 'growth', name: 'مربی توسعه فردی', desc: 'هدف‌گذاری، عادت، خودآگاهی', access: 'free', prompts: ['یک هدف ۳۰ روزه پیشنهاد بده', 'چطور عادت مطالعه بسازم؟', 'مدیریت زمان'], system: 'growth' },
+  { id: 'hr', name: 'مشاور HR', desc: 'جذب، عملکرد، تعارض سازمانی', access: 'free', prompts: ['چارچوب جلسه بازخورد عملکرد', 'استعفای خاموش', 'چک‌لیست آنبوردینگ'], system: 'hr' },
+  { id: 'feedback', name: 'تحلیلگر بازخورد', desc: 'بازخورد سازنده (SBI)', access: 'free', prompts: ['بازخورد تأخیر مکرر', 'بازخورد مثبت قوی', 'همکار مقاوم'], system: 'feedback' },
+  { id: 'soft', name: 'مربی مهارت نرم', desc: 'ارتباط، مذاکره، هوش هیجانی', access: 'free', prompts: ['تعارض تیمی', 'گوش دادن فعال', 'مذاکره'], system: 'soft' },
+  { id: 'org', name: 'مشاور سازمانی', desc: 'فرهنگ و تغییر سازمانی', access: 'free', prompts: ['تغییر فرهنگ', 'سلامت تیم', 'هم‌راستایی استراتژی'], system: 'org' }
 ];
 
 var currentAgent = null;
 var lastAgentReply = '';
 
-function getPlan() {
-  return getStore('aryaz_plan', 'رایگان') || 'رایگان';
-}
-
-function canAccess(agent) {
-  var plan = getPlan();
-  if (agent.access === 'free') return true;
-  if (agent.access === 'pro' && (plan === 'حرفه‌ای' || plan === 'سازمانی')) return true;
-  if (agent.access === 'org' && plan === 'سازمانی') return true;
-  return false;
-}
+function getPlan() { return getStore('aryaz_plan', 'رایگان') || 'رایگان'; }
+function canAccess() { return true; }
 
 function showTab(name) {
   document.getElementById('panelChat').classList.toggle('hidden', name !== 'chat');
   document.getElementById('panelHistory').classList.toggle('hidden', name !== 'history');
   document.getElementById('panelOutputs').classList.toggle('hidden', name !== 'outputs');
-  document.getElementById('tabChat').classList.toggle('active', name === 'chat');
-  document.getElementById('tabHistory').classList.toggle('active', name === 'history');
-  document.getElementById('tabOutputs').classList.toggle('active', name === 'outputs');
+  ['tabChat','tabHistory','tabOutputs'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('active', (id === 'tabChat' && name === 'chat') || (id === 'tabHistory' && name === 'history') || (id === 'tabOutputs' && name === 'outputs'));
+  });
   if (name === 'history') renderHistory();
   if (name === 'outputs') renderOutputs();
 }
 
 function renderAgentList() {
   var el = document.getElementById('agentList');
+  if (!el) return;
   el.innerHTML = AGENTS.map(function (a) {
-    var locked = !canAccess(a);
     var active = currentAgent && currentAgent.id === a.id ? ' active' : '';
     return '<button type="button" class="agent-item' + active + '" onclick="selectAgent(\'' + a.id + '\')">' +
-      '<h4>' + a.name + (locked ? ' <span class="lock-badge">قفل</span>' : '') + '</h4>' +
-      '<p>' + a.desc + '</p></button>';
+      '<h4>' + a.name + '</h4><p>' + a.desc + '</p></button>';
   }).join('');
 }
 
 function selectAgent(id) {
   var agent = AGENTS.find(function (a) { return a.id === id; });
   if (!agent) return;
-  if (!canAccess(agent)) {
-    toast('این Agent برای پلن شما قفل است. به عضویت حرفه‌ای ارتقا دهید.');
-    return;
-  }
   currentAgent = agent;
-  document.getElementById('activeAgentTitle').textContent = agent.name;
-  document.getElementById('activeAgentDesc').textContent = agent.desc;
+  var t = document.getElementById('activeAgentTitle');
+  var d = document.getElementById('activeAgentDesc');
+  if (t) t.textContent = agent.name;
+  if (d) d.textContent = agent.desc;
   renderAgentList();
   renderQuickPrompts();
   renderChat();
-  addActivity('انتخاب Agent: ' + agent.name);
+  if (typeof addActivity === 'function') addActivity('انتخاب Agent: ' + agent.name);
 }
 
 function renderQuickPrompts() {
   var box = document.getElementById('quickPrompts');
-  if (!currentAgent) { box.innerHTML = ''; return; }
+  if (!box || !currentAgent) return;
   box.innerHTML = currentAgent.prompts.map(function (p) {
-    return '<button type="button" onclick="usePrompt(\'' + p.replace(/'/g, "\\'") + '\')">' + p + '</button>';
+    return '<button type="button" onclick="usePrompt(' + JSON.stringify(p) + ')">' + p + '</button>';
   }).join('');
 }
 
@@ -115,29 +63,21 @@ function usePrompt(p) {
   sendMessage();
 }
 
-function chatKey() {
-  return currentAgent ? 'aryaz_ai_chat_' + currentAgent.id : null;
-}
-
-function getChat() {
-  var k = chatKey();
-  return k ? (getStore(k, []) || []) : [];
-}
-
-function setChat(msgs) {
-  var k = chatKey();
-  if (k) setStore(k, msgs);
-}
+function chatKey() { return currentAgent ? 'aryaz_ai_v3_' + currentAgent.id : null; }
+function getChat() { var k = chatKey(); return k ? (getStore(k, []) || []) : []; }
+function setChat(msgs) { var k = chatKey(); if (k) setStore(k, msgs); }
+function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function renderChat() {
   var body = document.getElementById('chatBody');
+  if (!body) return;
   if (!currentAgent) {
     body.innerHTML = '<div class="empty-chat"><div style="font-size:2.5rem">🤖</div><p>Agent را انتخاب کنید</p><div class="quick-prompts" id="quickPrompts"></div></div>';
     return;
   }
   var msgs = getChat();
   if (!msgs.length) {
-    body.innerHTML = '<div class="empty-chat"><p>گفتگو با <strong>' + currentAgent.name + '</strong> را شروع کنید</p><div class="quick-prompts" id="quickPrompts"></div></div>';
+    body.innerHTML = '<div class="empty-chat"><p>گفتگو با <strong>' + currentAgent.name + '</strong></p><div class="quick-prompts" id="quickPrompts"></div></div>';
     renderQuickPrompts();
     return;
   }
@@ -150,46 +90,64 @@ function renderChat() {
   lastAgentReply = last ? last.text : '';
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 function generateReply(agent, userText) {
-  var t = userText.toLowerCase();
-  var blocks = {
-    leadership: [
-      '✅ چارچوب پیشنهادی کوچ رهبری:\n۱) وضعیت فعلی تیم را در یک جمله تعریف کنید.\n۲) یک رفتار مشخص برای تغییر انتخاب کنید (نه شخصیت).\n۳) انتظار را شفاف و قابل اندازه‌گیری بگویید.\n۴) پشتیبانی و پیگیری هفتگی تعیین کنید.\n\nبرای پیام شما: روی شفافیت هدف و امنیت روانی تیم تمرکز کنید.',
-      '✅ تفویض مؤثر:\n• کار + نتیجه مورد انتظار + مهلت\n• سطح اختیار را مشخص کنید\n• نقطه بررسی میانی بگذارید\n• بعد از اتمام، بازخورد یادگیری بدهید.'
-    ],
-    growth: [
-      '✅ هدف ۳۰ روزه (SMART):\n• مشخص: یک مهارت واحد\n• قابل اندازه‌گیری: مثلاً ۳ جلسه تمرین در هفته\n• دست‌یافتنی: ۱۵–۲۰ دقیقه در روز\n• مرتبط با نقش فعلی\n• زمان‌دار: مرور در روز ۳۰\n\nقدم اول امروز: فقط ۱۰ دقیقه شروع کنید.',
-      '✅ ساخت عادت:\nمحرک → رفتار کوچک → پاداش.\nعادت را به روال موجود وصل کنید (بعد از چای صبحگاهی / پایان جلسه اول).'
-    ],
-    hr: [
-      '✅ جلسه بازخورد عملکرد:\n۱) آماده‌سازی با داده\n۲) باز کردن با نیت حمایتی\n۳) مدل SBI (موقعیت-رفتار-تأثیر)\n۴) درخواست تغییر + توافق روی قدم بعدی\n۵) زمان پیگیری',
-      '✅ آنبوردینگ ۳۰ روزه:\nهفته ۱: نقش، افراد، ابزار\nهفته ۲: اولین خروجی کوچک\nهفته ۳: بازخورد دو طرفه\nهفته ۴: هدف‌های سه‌ماهه'
-    ],
-    feedback: [
-      '✅ بازخورد به سبک SBI:\n• موقعیت: در جلسه دیروز پروژه X\n• رفتار: موعد گزارش را بدون اطلاع جابه‌جا کردید\n• تأثیر: تیم نتوانست تصمیم بگیرد و یک روز عقب افتادیم\n• درخواست: از این به بعد تغییر زمان را ۲۴ ساعت زودتر اعلام کنید.',
-      '✅ بازخورد مثبت قوی: رفتار مشخص + تأثیر روی تیم/نتیجه + تشویق به ادامه.'
-    ],
-    soft: [
-      '✅ در تعارض:\n۱) مکث و تنظیم هیجان\n۲) گوش دادن بدون دفاع\n۳) بازنویسی نگرانی طرف مقابل\n۴) یافتن نیاز مشترک\n۵) توافق روی قدم بعدی',
-      '✅ گوش دادن فعال: تماس چشمی، تأیید کوتاه، سوال شفاف‌ساز، خلاصه‌سازی.'
-    ],
-    org: [
-      '✅ تغییر فرهنگ: روایت رهبری + رفتارهای نمادین + سیستم تشویق + شاخص‌های قابل مشاهده.\nبدون هم‌راستایی این چهار لایه، تغییر پایدار نمی‌ماند.',
-      '✅ سلامت تیم: وضوح نقش، اعتماد، تعارض سازنده، تعهد، پاسخگویی، نتایج (مدل Lencioni).'
-    ]
+  var text = (userText || '').trim();
+  var low = text.toLowerCase();
+
+  // greetings
+  if (/^(سلام|درود|hi|hello|صبح بخیر|عصر بخیر)/i.test(text) || text.length < 4) {
+    var greet = {
+      leadership: 'سلام! من کوچ رهبری شما هستم.\nمی‌توانم درباره اعتمادسازی در تیم، تفویض اختیار، جلسات یک‌به‌یک و انگیزش کمکتان کنم.\nسوال مشخص‌تان چیست؟',
+      growth: 'سلام! من مربی توسعه فردی هستم.\nبرای هدف‌گذاری، ساخت عادت و مدیریت زمان کنار شما هستم. از کجا شروع کنیم؟',
+      hr: 'سلام! من مشاور منابع انسانی هستم.\nدر موضوعاتی مثل بازخورد عملکرد، آنبوردینگ، تعارض سازمانی و نگهداشت نیرو کمکتان می‌کنم. چه چالشی دارید؟',
+      feedback: 'سلام! من تحلیلگر بازخورد هستم.\nمی‌توانم متن بازخورد سازنده (مدل SBI) برایتان طراحی کنم. موقعیت را بگویید.',
+      soft: 'سلام! من مربی مهارت نرم هستم.\nارتباط مؤثر، مذاکره و مدیریت تعارض — بگویید روی کدام تمرکز کنیم؟',
+      org: 'سلام! من مشاور سازمانی هستم.\nفرهنگ سازمانی، تغییر و سلامت تیم حوزه تخصص من است. چه هدفی دارید؟'
+    };
+    return greet[agent.system] || greet.growth;
+  }
+
+  // keyword-based richer answers
+  if (/اعتماد|تیم/.test(text) && agent.system === 'leadership') {
+    return 'برای ساخت اعتماد در تیم:\n\n۱) قول‌های کوچک و قابل‌اجرا بدهید و دقیقاً انجام دهید.\n۲) اشتباهات را علنی بپذیرید؛ تیم از رهبر آسیب‌پذیر یاد می‌گیرد.\n۳) اطلاعات را شفاف و به‌موقع به اشتراک بگذارید.\n۴) در جلسات یک‌به‌یک بیشتر گوش دهید تا حرف بزنید.\n۵) موفقیت‌ها را عمومی و نقد را خصوصی انجام دهید.\n\nقدم عملی این هفته: یک جلسه ۱۵ دقیقه‌ای با هر عضو برای شنیدن موانع کار.';
+  }
+  if (/تفویض/.test(text)) {
+    return 'تفویض مؤثر در ۴ جزء:\n\n• چه کاری؟ (محدوده مشخص)\n• چه نتیجه‌ای؟ (خروجی قابل اندازه‌گیری)\n• تا کی؟ (مهلت)\n• با چه اختیاری؟ (فقط اطلاع / مشورت / تصمیم مستقل)\n\nبعد از تفویض، یک نقطه بررسی میانی بگذارید — نه میکرو‌مدیریت روزانه.';
+  }
+  if (/بازخورد|عملکرد/.test(text)) {
+    return 'چارچوب جلسه بازخورد عملکرد:\n\n۱) آماده‌سازی با داده و مثال مشخص\n۲) شروع با نیت حمایتی (نه محاکمه)\n۳) مدل SBI:\n   • موقعیت: زمان/مکان مشخص\n   • رفتار: آنچه دیده شد (نه قضاوت شخصیت)\n   • تأثیر: روی تیم/نتیجه/مشتری\n۴) درخواست تغییر + توافق روی قدم بعدی\n۵) زمان پیگیری (مثلاً دو هفته بعد)\n\nجمله نمونه: «در گزارش هفته گذشته، بخش تحلیل داده ناقص بود؛ تیم نتوانست تصمیم بگیرد. از این هفته لطفاً قبل از ارسال، چک‌لیست سه موردی را کامل کنید.»';
+  }
+  if (/عادت|هدف|۳۰|سی روز/.test(text)) {
+    return 'هدف ۳۰ روزه به روش SMART:\n\n• مشخص: فقط یک مهارت\n• قابل اندازه‌گیری: مثلاً ۳ نوبت تمرین در هفته\n• دست‌یافتنی: ۱۵ دقیقه در روز کافی است\n• مرتبط با نقش فعلی شما\n• زمان‌دار: مرور در روز ۳۰\n\nقانون عادت: محرک → رفتار خیلی کوچک → پاداش.\nامروز فقط ۱۰ دقیقه شروع کنید.';
+  }
+  if (/آنبورد|جذب|استخدام/.test(text)) {
+    return 'چک‌لیست آنبوردینگ ۳۰ روزه:\n\nهفته ۱: معرفی نقش، افراد کلیدی، ابزارها و دسترسی‌ها\nهفته ۲: یک خروجی کوچک واقعی با پشتیبانی\nهفته ۳: بازخورد دوطرفه (مدیر ↔ همکار جدید)\nهفته ۴: تعریف اهداف سه‌ماهه\n\nنکته: در ۱۴ روز اول، یک «buddy» سازمانی تعیین کنید.';
+  }
+  if (/تعارض|درگیری|اختلاف/.test(text)) {
+    return 'مدیریت تعارض:\n\n۱) مکث — هیجان را پایین بیاورید\n۲) گوش دادن بدون دفاع\n۳) نگرانی طرف مقابل را با کلمات خودتان بازگو کنید\n۴) نیاز مشترک را پیدا کنید\n۵) روی یک قدم بعدی توافق کنید\n\nجمله مفید: «می‌خواهم مطمئن شوم درست متوجه شدم؛ منظورتان این است که…؟»';
+  }
+  if (/فرهنگ|سازمان/.test(text)) {
+    return 'تغییر فرهنگ سازمانی پایدار نیاز به ۴ لایه هم‌راستا دارد:\n\n۱) روایت رهبری (چرا تغییر؟)\n۲) رفتارهای نمادین مدیران\n۳) سیستم تشویق و ارزیابی\n۴) شاخص‌های قابل مشاهده\n\nبدون این هم‌راستایی، تغییر شعاری می‌ماند.';
+  }
+
+  // default by agent specialty
+  var defaults = {
+    leadership: 'از زاویه رهبری پیشنهاد می‌کنم:\n\n۱) وضعیت را در یک جمله شفاف کنید\n۲) یک رفتار مشخص برای تغییر انتخاب کنید (نه ویژگی شخصیتی)\n۳) انتظار را قابل اندازه‌گیری بگویید\n۴) پشتیبانی و پیگیری هفتگی تعیین کنید\n\nاگر جزئیات بیشتری از موقعیت بدهید، قدم‌های دقیق‌تری می‌نویسم.',
+    growth: 'پیشنهاد توسعه فردی:\n\n• یک هدف کوچک برای ۷ روز آینده بنویسید\n• هر روز فقط یک بلوک ۱۵ دقیقه‌ای برای آن بگذارید\n• پیشرفت را شب‌ها در یک خط یادداشت کنید\n\nبگویید روی چه مهارتی تمرکز دارید تا برنامه دقیق‌تر بدهم.',
+    hr: 'از نگاه HR:\n\nابتدا سیاست سازمان و مستندسازی را در نظر بگیرید، بعد گفتگوی محترمانه و شفاف.\nبرای موضوع شما این ترتیب معمولاً بهترین نتیجه را می‌دهد:\nداده → گفتگو → توافق کتبی کوتاه → پیگیری.\n\nجزئیات موقعیت را بگویید تا چارچوب دقیق‌تری بدهم.',
+    feedback: 'متن بازخورد را با مدل SBI بسازید:\n\n• موقعیت\n• رفتار مشاهده‌شده\n• تأثیر\n• درخواست مشخص\n\nموقعیت واقعی‌تان را در یک خط بنویسید تا متن آماده بازخورد را بنویسم.',
+    soft: 'در مهارت نرم این سه کار فوری کمک می‌کند:\n\n۱) قبل از پاسخ، یک نفس و یک سوال شفاف‌ساز\n۲) احساس طرف مقابل را نام ببرید\n۳) روی نیاز مشترک توافق کنید\n\nسناریو را بگویید تا دیالوگ پیشنهادی بنویسم.',
+    org: 'در سطح سازمانی: وضوح نقش، اعتماد، تعارض سازنده، تعهد و پاسخگویی را همزمان ببینید.\nکدام بخش الان ضعیف‌تر است تا روی همان تمرکز کنیم؟'
   };
-  var pool = blocks[agent.system] || blocks.growth;
-  var base = pool[Math.floor(Math.random() * pool.length)];
-  return base + '\n\n—\n📌 نسخه کامل پلتفرم به API مدل زبانی متصل می‌شود؛ این پاسخ، نمونه ساختاریافته Agent «' + agent.name + '» است.';
+  return defaults[agent.system] || defaults.growth;
 }
 
 function sendMessage() {
-  if (!currentAgent) { toast('ابتدا یک Agent انتخاب کنید'); return; }
-  if (!canAccess(currentAgent)) { toast('دسترسی ندارید'); return; }
+  if (!currentAgent) {
+    if (typeof toast === 'function') toast('ابتدا یک Agent انتخاب کنید');
+    else alert('ابتدا یک Agent انتخاب کنید');
+    return;
+  }
   var input = document.getElementById('chatInput');
   var text = (input.value || '').trim();
   if (!text) return;
@@ -197,12 +155,13 @@ function sendMessage() {
   var msgs = getChat();
   var now = new Date().toLocaleString('fa-IR');
   msgs.push({ role: 'user', text: text, time: now });
-
-  // simulate API latency
   input.value = '';
   setChat(msgs);
   renderChat();
-  bodyTyping();
+
+  var body = document.getElementById('chatBody');
+  body.innerHTML += '<div class="msg agent"><div class="msg-bubble muted">در حال نوشتن پاسخ...</div></div>';
+  body.scrollTop = body.scrollHeight;
 
   setTimeout(function () {
     var reply = generateReply(currentAgent, text);
@@ -210,22 +169,12 @@ function sendMessage() {
     msgs = getChat();
     msgs.push({ role: 'agent', text: reply, time: new Date().toLocaleString('fa-IR') });
     setChat(msgs);
-    logInteraction(currentAgent.name, text, reply);
-    addActivity('گفتگو با ' + currentAgent.name);
+    var log = getStore('aryaz_ai_history', []) || [];
+    log.unshift({ agent: currentAgent.name, user: text, reply: reply.slice(0, 180), time: now });
+    setStore('aryaz_ai_history', log.slice(0, 50));
+    if (typeof addActivity === 'function') addActivity('گفتگو با ' + currentAgent.name);
     renderChat();
-  }, 600);
-}
-
-function bodyTyping() {
-  var body = document.getElementById('chatBody');
-  body.innerHTML += '<div class="msg agent"><div class="msg-bubble muted">در حال تولید پاسخ...</div></div>';
-  body.scrollTop = body.scrollHeight;
-}
-
-function logInteraction(agentName, userText, reply) {
-  var log = getStore('aryaz_ai_history', []) || [];
-  log.unshift({ agent: agentName, user: userText, reply: reply.slice(0, 200), time: new Date().toLocaleString('fa-IR') });
-  setStore('aryaz_ai_history', log.slice(0, 50));
+  }, 400);
 }
 
 function clearCurrentChat() {
@@ -233,44 +182,38 @@ function clearCurrentChat() {
   setChat([]);
   lastAgentReply = '';
   renderChat();
-  toast('گفتگو پاک شد');
+  if (typeof toast === 'function') toast('گفتگو پاک شد');
 }
 
 function saveLastOutput() {
-  if (!lastAgentReply) { toast('پاسخی برای ذخیره نیست'); return; }
+  if (!lastAgentReply) {
+    if (typeof toast === 'function') toast('پاسخی برای ذخیره نیست');
+    return;
+  }
   var outs = getStore('aryaz_ai_outputs', []) || [];
-  outs.unshift({
-    agent: currentAgent ? currentAgent.name : 'Agent',
-    text: lastAgentReply,
-    time: new Date().toLocaleString('fa-IR')
-  });
+  outs.unshift({ agent: currentAgent ? currentAgent.name : 'Agent', text: lastAgentReply, time: new Date().toLocaleString('fa-IR') });
   setStore('aryaz_ai_outputs', outs.slice(0, 30));
-  addActivity('ذخیره خروجی AI');
-  toast('خروجی ذخیره شد');
+  if (typeof addActivity === 'function') addActivity('ذخیره خروجی AI');
+  if (typeof toast === 'function') toast('خروجی ذخیره شد');
 }
 
 function renderHistory() {
   var log = getStore('aryaz_ai_history', []) || [];
   var el = document.getElementById('historyList');
-  if (!log.length) { el.innerHTML = '<p class="muted">هنوز تعاملی ثبت نشده</p>'; return; }
+  if (!el) return;
+  if (!log.length) { el.innerHTML = '<p class="muted">هنوز تعاملی نیست</p>'; return; }
   el.innerHTML = log.map(function (h) {
-    return '<div class="output-card" style="margin-bottom:10px;padding:12px;border:1px solid #e2e8f0;border-radius:12px">' +
-      '<strong>' + escapeHtml(h.agent) + '</strong> <span class="muted" style="font-size:.8rem">' + h.time + '</span>' +
-      '<p style="margin:8px 0 4px;font-size:.9rem"><strong>شما:</strong> ' + escapeHtml(h.user) + '</p>' +
-      '<p class="muted" style="font-size:.85rem">' + escapeHtml(h.reply) + '…</p></div>';
+    return '<div style="margin-bottom:10px;padding:12px;border:1px solid #e2e8f0;border-radius:12px"><strong>' + escapeHtml(h.agent) + '</strong> <span class="muted">' + h.time + '</span><p style="margin:8px 0;font-size:.9rem"><strong>شما:</strong> ' + escapeHtml(h.user) + '</p><p class="muted" style="font-size:.85rem">' + escapeHtml(h.reply) + '…</p></div>';
   }).join('');
 }
 
 function renderOutputs() {
   var outs = getStore('aryaz_ai_outputs', []) || [];
   var el = document.getElementById('outputsList');
-  if (!outs.length) { el.innerHTML = '<p class="muted">خروجی ذخیره‌شده‌ای نیست. در گفتگو «ذخیره آخرین پاسخ» را بزنید.</p>'; return; }
+  if (!el) return;
+  if (!outs.length) { el.innerHTML = '<p class="muted">خروجی ذخیره‌شده نیست</p>'; return; }
   el.innerHTML = outs.map(function (o, i) {
-    return '<div class="output-card" style="margin-bottom:10px;padding:12px;border:1px solid #e2e8f0;border-radius:12px">' +
-      '<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">' +
-      '<strong>' + escapeHtml(o.agent) + '</strong><span class="muted" style="font-size:.8rem">' + o.time + '</span></div>' +
-      '<pre style="white-space:pre-wrap;font-family:inherit;font-size:.88rem;margin:10px 0;line-height:1.7">' + escapeHtml(o.text) + '</pre>' +
-      '<button type="button" class="btn btn-secondary btn-sm" onclick="deleteOutput(' + i + ')">حذف</button></div>';
+    return '<div style="margin-bottom:10px;padding:12px;border:1px solid #e2e8f0;border-radius:12px"><strong>' + escapeHtml(o.agent) + '</strong> <span class="muted">' + o.time + '</span><pre style="white-space:pre-wrap;font-family:inherit;font-size:.88rem;margin:10px 0">' + escapeHtml(o.text) + '</pre><button type="button" class="btn btn-secondary btn-sm" onclick="deleteOutput(' + i + ')">حذف</button></div>';
   }).join('');
 }
 
@@ -279,18 +222,14 @@ function deleteOutput(i) {
   outs.splice(i, 1);
   setStore('aryaz_ai_outputs', outs);
   renderOutputs();
-  toast('حذف شد');
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  var plan = getPlan();
   var badge = document.getElementById('planBadge');
-  if (badge) badge.textContent = 'پلن: ' + plan;
+  if (badge) badge.textContent = 'پلن: ' + getPlan();
   renderAgentList();
   var input = document.getElementById('chatInput');
-  if (input) {
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-    });
-  }
+  if (input) input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
 });

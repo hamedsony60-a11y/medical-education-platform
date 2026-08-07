@@ -2,9 +2,18 @@ document.addEventListener('DOMContentLoaded', function () {
   var btn = document.getElementById('menuBtn');
   var nav = document.getElementById('nav');
   if (btn && nav) {
-    btn.addEventListener('click', function () { nav.classList.toggle('open'); });
+    btn.addEventListener('click', function () {
+      nav.classList.toggle('open');
+      btn.textContent = nav.classList.contains('open') ? '✕' : '☰';
+    });
+    // close menu on link click (mobile)
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('open');
+        btn.textContent = '☰';
+      });
+    });
   }
-  // highlight current nav link
   var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('.nav a').forEach(function (a) {
     var href = (a.getAttribute('href') || '').toLowerCase();
@@ -23,7 +32,7 @@ function toast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(t._timer);
-  t._timer = setTimeout(function () { t.classList.remove('show'); }, 2800);
+  t._timer = setTimeout(function () { t.classList.remove('show'); }, 2600);
 }
 
 function getStore(key, fallback) {
@@ -41,8 +50,4 @@ function addActivity(text) {
   var list = getStore('med_activity', []) || [];
   list.unshift({ text: text, time: new Date().toLocaleString('fa-IR') });
   setStore('med_activity', list.slice(0, 40));
-}
-
-function headerHTML() {
-  return '';
 }

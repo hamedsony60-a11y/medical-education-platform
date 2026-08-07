@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>هوش مصنوعی آریاز v5</title>
+  <title>هوش مصنوعی آریاز</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/logo.svg" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -31,7 +33,10 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <a href="index.html" class="logo" style="display:flex;align-items:center;gap:10px">
+        <img src="assets/logo.svg" alt="آریاز" width="36" height="36" style="border-radius:10px" />
+        آریاز
+      </a>
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
         <a href="agents.html" class="nav-cta">🤖 هوش مصنوعی</a>
@@ -45,7 +50,7 @@
       <div class="page-header">
         <div>
           <h1>🤖 موتور هوش مصنوعی آریاز</h1>
-          <p class="muted">نسخه ۵ — تشخیص موضوع + پلی‌بوک تخصصی + راهنمای اجرایی</p>
+          <p class="muted">نسخه ۵ — تشخیص موضوع + پلی‌بوک تخصصی</p>
         </div>
         <span class="badge" id="planBadge">AI v5</span>
       </div>
@@ -57,7 +62,7 @@
       <div id="panelChat">
         <div class="ai-layout">
           <aside class="ai-sidebar">
-            <h3 style="font-size:.95rem;margin-bottom:12px">Agentهای تخصصی</h3>
+            <h3 style="font-size:.95rem;margin-bottom:12px">Agentها</h3>
             <div id="agentList"></div>
           </aside>
           <section class="ai-main">
@@ -75,17 +80,17 @@
               <div class="empty-chat"><div style="font-size:2.5rem">🤖</div><p>Agent را انتخاب کنید</p><div class="quick-prompts" id="quickPrompts"></div></div>
             </div>
             <div class="chat-footer">
-              <textarea id="chatInput" placeholder="مثال: تیمم بی‌انگیزه شده / بازخورد تأخیر بنویس / برنامه ۳۰ روزه بده" rows="2"></textarea>
+              <textarea id="chatInput" placeholder="سوال تخصصی..." rows="2"></textarea>
               <button type="button" class="btn btn-primary" onclick="sendMessage()">ارسال</button>
             </div>
           </section>
         </div>
       </div>
-      <div id="panelHistory" class="hidden"><div class="card" style="padding:20px"><h3>تاریخچه</h3><div id="historyList"></div></div></div>
-      <div id="panelOutputs" class="hidden"><div class="card" style="padding:20px"><h3>خروجی‌ها</h3><div id="outputsList"></div></div></div>
+      <div id="panelHistory" class="hidden"><div class="card" style="padding:20px"><div id="historyList"></div></div></div>
+      <div id="panelOutputs" class="hidden"><div class="card" style="padding:20px"><div id="outputsList"></div></div></div>
     </div>
   </main>
-  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز — AI Engine v5</div></footer>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/agents.js?v=5"></script>
 </body>

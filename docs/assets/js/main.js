@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (btn && nav) {
     btn.addEventListener('click', function () { nav.classList.toggle('open'); });
   }
+  // highlight current nav link
+  var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('.nav a').forEach(function (a) {
+    var href = (a.getAttribute('href') || '').toLowerCase();
+    if (href === path || (path === '' && href === 'index.html')) a.classList.add('active');
+  });
 });
 
 function toast(msg) {
@@ -16,14 +22,15 @@ function toast(msg) {
   }
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(function () { t.classList.remove('show'); }, 2800);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function () { t.classList.remove('show'); }, 2800);
 }
 
 function getStore(key, fallback) {
   try {
     var v = localStorage.getItem(key);
-    return v ? JSON.parse(v) : (fallback || null);
-  } catch (e) { return fallback || null; }
+    return v ? JSON.parse(v) : (fallback !== undefined ? fallback : null);
+  } catch (e) { return fallback !== undefined ? fallback : null; }
 }
 
 function setStore(key, val) {
@@ -33,6 +40,9 @@ function setStore(key, val) {
 function addActivity(text) {
   var list = getStore('med_activity', []) || [];
   list.unshift({ text: text, time: new Date().toLocaleString('fa-IR') });
-  if (list.length > 30) list = list.slice(0, 30);
-  setStore('med_activity', list);
+  setStore('med_activity', list.slice(0, 40));
+}
+
+function headerHTML() {
+  return '';
 }

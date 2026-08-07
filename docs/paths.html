@@ -3,30 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>مسیرهای یادگیری | آریاز</title>
+  <title>مسیر یادگیری | آریاز</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="" width="36" height="36" /> آریاز</a>
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
-        <a href="paths.html" class="active">مسیر یادگیری</a>
+        <a href="paths.html" class="active">مسیرها</a>
         <a href="assessments.html">ارزیابی</a>
         <a href="library.html">کتابخانه</a>
         <a href="store.html">فروشگاه</a>
-        <a href="agents.html">Agent هوشمند</a>
-        <a href="dashboard.html" class="nav-cta">داشبورد</a>
+        <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
+        <a href="dashboard.html">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
   </header>
   <main class="section">
     <div class="container">
-      <h1>Learning Path Builder</h1>
-      <p class="muted mb-8">مسیرهای توسعه فردی و سازمانی با پیش‌نیاز و پیشرفت</p>
+      <h1>مسیرهای یادگیری</h1>
+      <p class="muted mb-8">مسیر توسعه با مراحل، پیش‌نیاز و ادامه از محل توقف</p>
       <div class="list" id="pathList"></div>
       <div id="pathModal" class="modal hidden">
         <div class="modal-content">
@@ -36,7 +37,7 @@
           <ol id="pSteps" style="padding-right:20px;margin:16px 0"></ol>
           <div class="progress-bar"><span id="pBar" style="width:0%"></span></div>
           <p class="muted" id="pPct" style="margin:8px 0 16px">۰٪</p>
-          <button class="btn btn-primary btn-block" id="pBtn" onclick="startPath()">شروع / ادامه مسیر</button>
+          <button class="btn btn-primary btn-block" id="pBtn" onclick="startPath()">شروع / ادامه</button>
         </div>
       </div>
     </div>

@@ -4,49 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>عضویت | آریاز</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="" width="36" height="36" /> آریاز</a>
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
-        <a href="paths.html">مسیر یادگیری</a>
-        <a href="assessments.html">ارزیابی</a>
-        <a href="library.html">کتابخانه</a>
+        <a href="paths.html">مسیرها</a>
         <a href="store.html">فروشگاه</a>
         <a href="membership.html" class="active">عضویت</a>
-        <a href="dashboard.html" class="nav-cta">داشبورد</a>
+        <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
+        <a href="dashboard.html">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
   </header>
   <main class="section">
     <div class="container">
-      <h1>Membership & Access</h1>
-      <p class="muted mb-8">پلن رایگان، حرفه‌ای و سازمانی</p>
-      <p class="mb-6">سطح فعلی شما: <strong id="currentPlan">رایگان</strong></p>
+      <h1>پلن‌های عضویت</h1>
+      <p class="muted mb-6">سطح فعلی: <strong id="currentPlan">رایگان</strong></p>
       <div class="grid-3">
         <div class="card" style="padding:24px">
           <h3>رایگان</h3>
           <p class="price">۰ تومان</p>
-          <ul class="muted" style="padding-right:18px;margin:12px 0;font-size:.9rem">
+          <ul class="muted" style="padding-right:18px;margin:12px 0;font-size:.9rem;line-height:1.9">
             <li>دوره‌های رایگان</li>
-            <li>۱ ارزیابی در ماه</li>
+            <li>ارزیابی پایه</li>
             <li>دسترسی محدود کتابخانه</li>
           </ul>
           <button class="btn btn-secondary btn-block" onclick="setPlan('رایگان')">انتخاب</button>
         </div>
-        <div class="card" style="padding:24px;border-color:#93c5fd">
+        <div class="card" style="padding:24px;border-color:#93c5fd;box-shadow:0 8px 30px rgba(29,78,216,.12)">
           <span class="badge">پیشنهادی</span>
           <h3 style="margin-top:8px">حرفه‌ای</h3>
           <p class="price">۴۹۰٬۰۰۰ / ماه</p>
-          <ul class="muted" style="padding-right:18px;margin:12px 0;font-size:.9rem">
-            <li>همه دوره‌ها</li>
-            <li>مسیرهای یادگیری</li>
-            <li>Agentهای پایه</li>
+          <ul class="muted" style="padding-right:18px;margin:12px 0;font-size:.9rem;line-height:1.9">
+            <li>همه دوره‌ها و مسیرها</li>
+            <li>Agentهای تخصصی</li>
             <li>کتابخانه کامل</li>
           </ul>
           <button class="btn btn-primary btn-block" onclick="setPlan('حرفه‌ای')">ارتقاء</button>
@@ -54,10 +52,9 @@
         <div class="card" style="padding:24px">
           <h3>سازمانی</h3>
           <p class="price">توافقی</p>
-          <ul class="muted" style="padding-right:18px;margin:12px 0;font-size:.9rem">
+          <ul class="muted" style="padding-right:18px;margin:12px 0;font-size:.9rem;line-height:1.9">
             <li>کاربران نامحدود تیم</li>
             <li>گزارش مدیریتی</li>
-            <li>Agentهای سازمانی</li>
             <li>پشتیبانی اختصاصی</li>
           </ul>
           <a href="consult.html" class="btn btn-teal btn-block">درخواست دمو</a>
@@ -71,7 +68,7 @@
     function setPlan(p) {
       setStore('aryaz_plan', p);
       document.getElementById('currentPlan').textContent = p;
-      addActivity('تغییر پلن عضویت به: ' + p);
+      addActivity('پلن: ' + p);
       toast('پلن «' + p + '» فعال شد');
     }
     document.addEventListener('DOMContentLoaded', function () {

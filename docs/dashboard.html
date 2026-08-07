@@ -4,31 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>داشبورد | آریاز</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo"><span>آ</span> آریاز</a>
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="" width="36" height="36" /> آریاز</a>
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
-        <a href="paths.html">مسیر یادگیری</a>
+        <a href="paths.html">مسیرها</a>
         <a href="assessments.html">ارزیابی</a>
         <a href="library.html">کتابخانه</a>
         <a href="store.html">فروشگاه</a>
-        <a href="agents.html">Agent هوشمند</a>
-        <a href="dashboard.html" class="active nav-cta">داشبورد</a>
+        <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
+        <a href="dashboard.html" class="active">داشبورد</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
   </header>
   <main class="section">
     <div class="container">
-      <h1>داشبورد کاربر</h1>
+      <h1>داشبورد من</h1>
       <p class="muted mb-6">پلن: <strong id="planLabel">رایگان</strong></p>
       <div class="stats-grid">
-        <div class="card stat-card"><p class="muted">دوره‌های من</p><p class="stat-num" id="sCourses">۰</p></div>
+        <div class="card stat-card"><p class="muted">دوره‌ها</p><p class="stat-num" id="sCourses">۰</p></div>
         <div class="card stat-card"><p class="muted">مسیرها</p><p class="stat-num" id="sPaths">۰</p></div>
         <div class="card stat-card"><p class="muted">ارزیابی‌ها</p><p class="stat-num" id="sAssess">۰</p></div>
         <div class="card stat-card"><p class="muted">سفارش‌ها</p><p class="stat-num" id="sOrders">۰</p></div>
@@ -38,14 +39,14 @@
         <a href="courses.html" class="card quick-link">🎓 دوره‌ها</a>
         <a href="paths.html" class="card quick-link">🗺️ مسیرها</a>
         <a href="assessments.html" class="card quick-link">📋 ارزیابی</a>
-        <a href="agents.html" class="card quick-link">🤖 Agent</a>
+        <a href="agents.html" class="card quick-link">🤖 هوش مصنوعی</a>
         <a href="library.html" class="card quick-link">📚 کتابخانه</a>
         <a href="store.html" class="card quick-link">🛒 فروشگاه</a>
         <a href="membership.html" class="card quick-link">🔐 عضویت</a>
         <a href="consult.html" class="card quick-link">📅 مشاوره</a>
       </div>
       <h2 class="mt-8">فعالیت‌های اخیر</h2>
-      <div class="card"><ul class="activity-list" id="actList"><li class="muted">هنوز فعالیتی نیست — از دوره‌ها یا ارزیابی شروع کنید</li></ul></div>
+      <div class="card"><ul class="activity-list" id="actList"><li class="muted">هنوز فعالیتی ثبت نشده</li></ul></div>
     </div>
   </main>
   <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>

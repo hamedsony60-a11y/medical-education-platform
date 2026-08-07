@@ -12,17 +12,14 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.svg" alt="" width="36" height="36" />
-        آریاز
-      </a>
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="" width="36" height="36" /> آریاز</a>
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
         <a href="paths.html">مسیرها</a>
         <a href="assessments.html">ارزیابی</a>
         <a href="library.html">کتابخانه</a>
+        <a href="tools.html">ابزارها</a>
         <a href="store.html">فروشگاه</a>
-        <a href="membership.html">عضویت</a>
         <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
         <a href="dashboard.html">داشبورد</a>
       </nav>
@@ -33,36 +30,42 @@
   <section class="hero">
     <div class="container">
       <div class="hero-badge">توسعه فردی · مهارت نرم · رهبری · منابع انسانی</div>
-      <h1>یادگیری، ارزیابی و رشد — در یک پلتفرم</h1>
-      <p>دوره‌های تخصصی، مسیر توسعه، آزمون، کتابخانه، فروشگاه و Agentهای هوشمند برای افراد و سازمان‌ها.</p>
+      <h1 id="helloTitle">یادگیری، ارزیابی و رشد — یکپارچه</h1>
+      <p>دوره با درس واقعی، مسیر یادگیری، آزمون، کتابخانه، ابزار، فروشگاه و Agent هوشمند.</p>
       <div class="hero-actions">
-        <a href="courses.html" class="btn btn-white">مشاهده دوره‌ها</a>
-        <a href="paths.html" class="btn btn-outline">مسیرهای یادگیری</a>
+        <a href="courses.html" class="btn btn-white">شروع یادگیری</a>
+        <a href="paths.html" class="btn btn-outline">مسیرها</a>
         <a href="agents.html" class="btn btn-outline">هوش مصنوعی</a>
       </div>
       <div class="hero-stats">
-        <div><strong>۸۰+</strong><span>دوره آموزشی</span></div>
-        <div><strong>۲۵</strong><span>مسیر یادگیری</span></div>
-        <div><strong>۶</strong><span>Agent هوشمند</span></div>
-        <div><strong>۱۲٬۰۰۰+</strong><span>کاربر</span></div>
+        <div><strong>۶</strong><span>دوره تخصصی</span></div>
+        <div><strong>۴</strong><span>مسیر یادگیری</span></div>
+        <div><strong>۶</strong><span>کتاب</span></div>
+        <div><strong>۶</strong><span>Agent</span></div>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
+      <div class="card" id="continueCard" style="padding:20px;margin-bottom:28px;display:none">
+        <strong>ادامه یادگیری</strong>
+        <p class="muted" id="continueText" style="margin:8px 0"></p>
+        <a href="courses.html" class="btn btn-primary btn-sm">برو به دوره‌ها</a>
+      </div>
+
       <h2 class="section-title">ماژول‌ها</h2>
-      <p class="section-sub">همه ابزارهای رشد فردی و سازمانی</p>
+      <p class="section-sub">همه بخش‌های پلتفرم</p>
       <div class="grid-3">
-        <a href="courses.html" class="card feature-card"><div class="icon icon-blue">🎓</div><h3>آموزش آنلاین</h3><p>دوره، فصل، پیشرفت و گواهینامه</p></a>
-        <a href="paths.html" class="card feature-card"><div class="icon icon-violet">🗺️</div><h3>مسیر یادگیری</h3><p>ترکیب دوره، آزمون و ابزار با پیش‌نیاز</p></a>
-        <a href="assessments.html" class="card feature-card"><div class="icon icon-amber">📋</div><h3>ارزیابی</h3><p>آزمون تخصصی و پیشنهاد مسیر</p></a>
-        <a href="library.html" class="card feature-card"><div class="icon icon-green">📚</div><h3>کتابخانه</h3><p>کتاب و منابع مطالعاتی</p></a>
-        <a href="store.html" class="card feature-card"><div class="icon icon-rose">🛒</div><h3>فروشگاه</h3><p>دوره، کتاب، ابزار و Agent</p></a>
-        <a href="agents.html" class="card feature-card"><div class="icon icon-cyan">🤖</div><h3>هوش مصنوعی</h3><p>مشاور رهبری، HR و توسعه فردی</p></a>
-        <a href="membership.html" class="card feature-card"><div class="icon icon-blue">🔐</div><h3>عضویت</h3><p>رایگان، حرفه‌ای و سازمانی</p></a>
-        <a href="consult.html" class="card feature-card"><div class="icon icon-amber">📅</div><h3>مشاوره</h3><p>رزرو جلسه و درخواست سازمانی</p></a>
-        <a href="dashboard.html" class="card feature-card"><div class="icon icon-violet">📊</div><h3>داشبورد</h3><p>پیشرفت و فعالیت‌های شما</p></a>
+        <a href="courses.html" class="card feature-card"><div class="icon icon-blue">🎓</div><h3>دوره‌ها</h3><p>درس‌خوانی، پیشرفت، یادداشت، گواهینامه</p></a>
+        <a href="paths.html" class="card feature-card"><div class="icon icon-violet">🗺️</div><h3>مسیر یادگیری</h3><p>مراحل متصل به دوره و آزمون و AI</p></a>
+        <a href="assessments.html" class="card feature-card"><div class="icon icon-amber">📋</div><h3>ارزیابی</h3><p>آزمون + تحلیل + پیشنهاد مسیر</p></a>
+        <a href="library.html" class="card feature-card"><div class="icon icon-green">📚</div><h3>کتابخانه</h3><p>فصل‌به‌فصل با پیشرفت مطالعه</p></a>
+        <a href="tools.html" class="card feature-card"><div class="icon icon-rose">🛠️</div><h3>ابزارها</h3><p>چک‌لیست، Canvas، قالب بازخورد</p></a>
+        <a href="store.html" class="card feature-card"><div class="icon icon-cyan">🛒</div><h3>فروشگاه</h3><p>سبد، تخفیف، فاکتور</p></a>
+        <a href="agents.html" class="card feature-card"><div class="icon icon-blue">🤖</div><h3>هوش مصنوعی</h3><p>۶ Agent تخصصی</p></a>
+        <a href="membership.html" class="card feature-card"><div class="icon icon-amber">🔐</div><h3>عضویت</h3><p>رایگان / حرفه‌ای / سازمانی</p></a>
+        <a href="profile.html" class="card feature-card"><div class="icon icon-violet">👤</div><h3>پروفایل</h3><p>هدف یادگیری و پشتیبان‌گیری</p></a>
       </div>
     </div>
   </section>
@@ -70,12 +73,25 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div><h4>یادگیری</h4><a href="courses.html">دوره‌ها</a><a href="paths.html">مسیرها</a><a href="assessments.html">ارزیابی</a></div>
-      <div><h4>منابع</h4><a href="library.html">کتابخانه</a><a href="store.html">فروشگاه</a></div>
-      <div><h4>خدمات</h4><a href="agents.html">هوش مصنوعی</a><a href="consult.html">مشاوره</a><a href="membership.html">عضویت</a></div>
-      <div><h4>حساب</h4><a href="dashboard.html">داشبورد</a></div>
+      <div><h4>منابع</h4><a href="library.html">کتابخانه</a><a href="tools.html">ابزارها</a><a href="store.html">فروشگاه</a></div>
+      <div><h4>خدمات</h4><a href="agents.html">هوش مصنوعی</a><a href="consult.html">مشاوره</a></div>
+      <div><h4>حساب</h4><a href="dashboard.html">داشبورد</a><a href="profile.html">پروفایل</a><a href="membership.html">عضویت</a></div>
     </div>
     <div class="footer-bottom">© ۱۴۰۵ آریاز</div>
   </footer>
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var p = getStore('aryaz_profile', {}) || {};
+      if (p.name) document.getElementById('helloTitle').textContent = p.name + '، به آریاز خوش آمدید';
+      var courses = getStore('aryaz_courses', {}) || {};
+      var keys = Object.keys(courses);
+      if (keys.length) {
+        var c = courses[keys[0]];
+        document.getElementById('continueCard').style.display = 'block';
+        document.getElementById('continueText').textContent = (c.title || keys[0]) + ' — ' + (c.progress || 0) + '٪ پیشرفت';
+      }
+    });
+  </script>
 </body>
 </html>

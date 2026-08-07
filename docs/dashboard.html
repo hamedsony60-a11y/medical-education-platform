@@ -15,42 +15,52 @@
       <nav class="nav" id="nav">
         <a href="courses.html">دوره‌ها</a>
         <a href="paths.html">مسیرها</a>
-        <a href="assessments.html">ارزیابی</a>
+        <a href="tools.html">ابزارها</a>
         <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
         <a href="dashboard.html" class="active">داشبورد</a>
+        <a href="profile.html">پروفایل</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
     </div>
   </header>
   <main class="section">
     <div class="container">
-      <h1>داشبورد من</h1>
-      <p class="muted mb-6">پلن: <strong id="planLabel">رایگان</strong></p>
+      <h1 id="dashHello">داشبورد من</h1>
+      <p class="muted mb-6">پلن: <strong id="planLabel">رایگان</strong> · تمرکز: <strong id="focusLabel">—</strong></p>
       <div class="stats-grid">
-        <div class="card stat-card"><p class="muted">دوره‌های فعال</p><p class="stat-num" id="sCourses">۰</p></div>
-        <div class="card stat-card"><p class="muted">گواهینامه‌ها</p><p class="stat-num" id="sCerts">۰</p></div>
+        <div class="card stat-card"><p class="muted">دوره‌ها</p><p class="stat-num" id="sCourses">۰</p></div>
+        <div class="card stat-card"><p class="muted">گواهینامه</p><p class="stat-num" id="sCerts">۰</p></div>
         <div class="card stat-card"><p class="muted">مسیرها</p><p class="stat-num" id="sPaths">۰</p></div>
-        <div class="card stat-card"><p class="muted">ارزیابی‌ها</p><p class="stat-num" id="sAssess">۰</p></div>
+        <div class="card stat-card"><p class="muted">ارزیابی</p><p class="stat-num" id="sAssess">۰</p></div>
+        <div class="card stat-card"><p class="muted">کتاب‌ها</p><p class="stat-num" id="sBooks">۰</p></div>
+        <div class="card stat-card"><p class="muted">سفارش‌ها</p><p class="stat-num" id="sOrders">۰</p></div>
       </div>
 
       <h2 class="mt-8">دوره‌های من</h2>
-      <div class="card" style="margin-bottom:20px"><ul class="activity-list" id="myCourses"><li class="muted">دوره‌ای ندارید — از صفحه دوره‌ها شروع کنید</li></ul></div>
+      <div class="card" style="margin-bottom:20px"><ul class="activity-list" id="myCourses"><li class="muted">خالی</li></ul></div>
 
       <h2 class="mt-8">گواهینامه‌ها</h2>
-      <div class="card" style="margin-bottom:20px"><ul class="activity-list" id="myCerts"><li class="muted">هنوز گواهینامه‌ای نیست</li></ul></div>
+      <div class="card" style="margin-bottom:20px"><ul class="activity-list" id="myCerts"><li class="muted">خالی</li></ul></div>
 
-      <h2 class="mt-8">آخرین ارزیابی‌ها</h2>
+      <h2 class="mt-8">ارزیابی‌ها</h2>
       <div class="card" style="margin-bottom:20px"><ul class="activity-list" id="myAssess"><li class="muted">—</li></ul></div>
+
+      <h2 class="mt-8">سفارش‌ها</h2>
+      <div class="card" style="margin-bottom:20px"><ul class="activity-list" id="myOrders"><li class="muted">—</li></ul></div>
 
       <h2 class="mt-8">دسترسی سریع</h2>
       <div class="grid-4">
         <a href="courses.html" class="card quick-link">🎓 دوره‌ها</a>
         <a href="paths.html" class="card quick-link">🗺️ مسیرها</a>
-        <a href="assessments.html" class="card quick-link">📋 ارزیابی</a>
+        <a href="tools.html" class="card quick-link">🛠️ ابزارها</a>
         <a href="agents.html" class="card quick-link">🤖 AI</a>
+        <a href="library.html" class="card quick-link">📚 کتابخانه</a>
+        <a href="store.html" class="card quick-link">🛒 فروشگاه</a>
+        <a href="assessments.html" class="card quick-link">📋 ارزیابی</a>
+        <a href="profile.html" class="card quick-link">👤 پروفایل</a>
       </div>
 
-      <h2 class="mt-8">فعالیت‌های اخیر</h2>
+      <h2 class="mt-8">فعالیت‌ها</h2>
       <div class="card"><ul class="activity-list" id="actList"><li class="muted">—</li></ul></div>
     </div>
   </main>
@@ -58,39 +68,49 @@
   <script src="assets/js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      var profile = getStore('aryaz_profile', {}) || {};
       var courses = getStore('aryaz_courses', {}) || {};
       var paths = getStore('aryaz_paths', {}) || {};
       var assess = getStore('aryaz_assess', []) || [];
+      var books = getStore('aryaz_books', {}) || {};
+      var orders = getStore('aryaz_orders', []) || [];
       var act = getStore('med_activity', []) || [];
       var keys = Object.keys(courses);
       var certs = keys.filter(function (k) { return courses[k].cert || courses[k].progress >= 100; });
 
+      if (profile.name) document.getElementById('dashHello').textContent = 'سلام ' + profile.name;
       document.getElementById('planLabel').textContent = getStore('aryaz_plan', 'رایگان') || 'رایگان';
+      document.getElementById('focusLabel').textContent = profile.focus || '—';
       document.getElementById('sCourses').textContent = keys.length;
       document.getElementById('sCerts').textContent = certs.length;
       document.getElementById('sPaths').textContent = Object.keys(paths).length;
       document.getElementById('sAssess').textContent = assess.length;
+      document.getElementById('sBooks').textContent = Object.keys(books).length;
+      document.getElementById('sOrders').textContent = orders.length;
 
       if (keys.length) {
         document.getElementById('myCourses').innerHTML = keys.map(function (k) {
           var c = courses[k];
-          return '<li><span>' + (c.title || k) + ' — ' + (c.progress || 0) + '٪</span>' +
-            '<a href="courses.html" class="badge">ادامه</a></li>';
+          return '<li><span>' + (c.title || k) + ' — <strong>' + (c.progress || 0) + '٪</strong></span><a class="badge" href="courses.html">ادامه</a></li>';
         }).join('');
       }
       if (certs.length) {
         document.getElementById('myCerts').innerHTML = certs.map(function (k) {
-          var c = courses[k];
-          return '<li><span> گواهی: ' + (c.title || k) + '</span><span class="time">' + (c.certDate || '') + '</span></li>';
+          return '<li><span>' + (courses[k].title || k) + '</span><span class="time">' + (courses[k].certDate || '') + '</span></li>';
         }).join('');
       }
       if (assess.length) {
-        document.getElementById('myAssess').innerHTML = assess.slice(0, 5).map(function (a) {
-          return '<li><span>' + a.title + ' — <strong>' + a.score + '٪</strong></span><span class="time">' + a.time + '</span></li>';
+        document.getElementById('myAssess').innerHTML = assess.slice(0, 6).map(function (a) {
+          return '<li><span>' + a.title + ' — ' + a.score + '٪</span><span class="time">' + a.time + '</span></li>';
+        }).join('');
+      }
+      if (orders.length) {
+        document.getElementById('myOrders').innerHTML = orders.slice(0, 5).map(function (o) {
+          return '<li><span>' + (o.id || 'سفارش') + ' — ' + (o.total || 0).toLocaleString('fa-IR') + ' ت</span><span class="time">' + (o.time || '') + '</span></li>';
         }).join('');
       }
       if (act.length) {
-        document.getElementById('actList').innerHTML = act.slice(0, 12).map(function (a) {
+        document.getElementById('actList').innerHTML = act.slice(0, 15).map(function (a) {
           return '<li><span>' + a.text + '</span><span class="time">' + a.time + '</span></li>';
         }).join('');
       }

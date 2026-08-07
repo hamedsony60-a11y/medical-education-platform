@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ابزارها | آریاز</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="" width="36" height="36" /> آریاز</a>
+      <nav class="nav" id="nav">
+        <a href="courses.html">دوره‌ها</a>
+        <a href="tools.html" class="active">ابزارها</a>
+        <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
+        <a href="dashboard.html">داشبورد</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <h1>ابزارهای کاربردی</h1>
+      <p class="muted mb-8">چک‌لیست، Canvas و قالب‌های آماده — قابل ذخیره در مرورگر</p>
+
+      <div class="grid-2" style="margin-bottom:28px">
+        <button type="button" class="card feature-card" onclick="openTool('onboard')"><div class="icon icon-green">✅</div><h3>چک‌لیست آنبوردینگ ۳۰ روزه</h3><p>مراحل ورود همکار جدید</p></button>
+        <button type="button" class="card feature-card" onclick="openTool('okr')"><div class="icon icon-blue">🎯</div><h3>Canvas هدف ۹۰ روزه</h3><p>هدف، معیار، عادت هفتگی</p></button>
+        <button type="button" class="card feature-card" onclick="openTool('feedback')"><div class="icon icon-amber">💬</div><h3>قالب بازخورد SBI</h3><p>موقعیت، رفتار، تأثیر، درخواست</p></button>
+        <button type="button" class="card feature-card" onclick="openTool('1on1')"><div class="icon icon-violet">🗓️</div><h3>دستورکار یک‌به‌یک</h3><p>ساختار جلسه ۳۰ دقیقه‌ای</p></button>
+      </div>
+
+      <div id="toolPanel" class="card hidden" style="padding:24px">
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+          <h2 id="toolTitle">ابزار</h2>
+          <button class="btn btn-secondary btn-sm" onclick="saveTool()">ذخیره</button>
+        </div>
+        <div id="toolBody"></div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/tools.js"></script>
+</body>
+</html>

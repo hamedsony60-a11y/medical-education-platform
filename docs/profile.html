@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>پروفایل | آریاز</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="" width="36" height="36" /> آریاز</a>
+      <nav class="nav" id="nav">
+        <a href="dashboard.html">داشبورد</a>
+        <a href="profile.html" class="active">پروفایل</a>
+        <a href="membership.html">عضویت</a>
+        <a href="agents.html" class="nav-cta">هوش مصنوعی</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container" style="max-width:640px">
+      <h1>پروفایل کاربر</h1>
+      <p class="muted mb-8">اطلاعات در همین مرورگر ذخیره می‌شود</p>
+      <div class="card" style="padding:24px">
+        <div class="form-group"><label>نام نمایشی</label><input id="pName" placeholder="مثلاً سارا محمدی" /></div>
+        <div class="form-group"><label>نقش شغلی</label><input id="pRole" placeholder="مدیر تیم / کارشناس HR / ..." /></div>
+        <div class="form-group"><label>هدف یادگیری اصلی</label><textarea id="pGoal" rows="3" placeholder="در ۹۰ روز آینده می‌خواهم..."></textarea></div>
+        <div class="form-group"><label>حوزه تمرکز</label>
+          <select id="pFocus">
+            <option>مهارت نرم</option>
+            <option>رهبری</option>
+            <option>منابع انسانی</option>
+            <option>توسعه فردی</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="saveProfile()">ذخیره پروفایل</button>
+      </div>
+      <div style="margin-top:16px">
+        <button class="btn btn-secondary btn-sm" onclick="exportData()">خروجی پشتیبان (JSON)</button>
+        <button class="btn btn-secondary btn-sm" onclick="if(confirm('همه داده محلی پاک شود؟'))clearAll()">پاک‌سازی داده‌ها</button>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="footer-bottom">© ۱۴۰۵ آریاز</div></footer>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function load() {
+      var p = getStore('aryaz_profile', {}) || {};
+      document.getElementById('pName').value = p.name || '';
+      document.getElementById('pRole').value = p.role || '';
+      document.getElementById('pGoal').value = p.goal || '';
+      if (p.focus) document.getElementById('pFocus').value = p.focus;
+    }
+    function saveProfile() {
+      var p = {
+        name: document.getElementById('pName').value.trim(),
+        role: document.getElementById('pRole').value.trim(),
+        goal: document.getElementById('pGoal').value.trim(),
+        focus: document.getElementById('pFocus').value
+      };
+      setStore('aryaz_profile', p);
+      addActivity('به‌روزرسانی پروفایل');
+      toast('پروفایل ذخیره شد');
+    }
+    function exportData() {
+      var dump = {};
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf('aryaz') === 0 || k === 'med_activity') {
+          try { dump[k] = JSON.parse(localStorage.getItem(k)); } catch (e) { dump[k] = localStorage.getItem(k); }
+        }
+      }
+      var blob = new Blob([JSON.stringify(dump, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'aryaz-backup.json';
+      a.click();
+      toast('فایل پشتیبان دانلود شد');
+    }
+    function clearAll() {
+      Object.keys(localStorage).forEach(function (k) {
+        if (k.indexOf('aryaz') === 0 || k === 'med_activity') localStorage.removeItem(k);
+      });
+      toast('پاک شد');
+      load();
+    }
+    document.addEventListener('DOMContentLoaded', load);
+  </script>
+</body>
+</html>
